@@ -1,21 +1,19 @@
 import React, { Component } from "react";
-import { NavItem, Icon } from "react-materialize";
+import { NavItem, Glyphicon } from "react-bootstrap";
 
 export class RoleItem extends Component {
   render() {
     let { role } = this.props;
-    if (role == "doctor") {
+    if (role === "doctor") {
       return (
         <NavItem>
-          Doctor Login
-          <Icon>add_alert</Icon>
+          Doctor Login <Glyphicon glyph="glyphicon glyphicon-plus" />
         </NavItem>
       );
     } else {
       return (
         <NavItem>
-          Patient Login
-          <Icon>accessibility</Icon>
+          Patient Login <Glyphicon glyph="glyphicon glyphicon-user" />
         </NavItem>
       );
     }

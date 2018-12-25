@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import { Dropdown, Icon, NavItem } from "react-materialize";
+import { NavItem, Glyphicon } from "react-bootstrap";
 
 export class LogoutHeaderItem extends Component {
   render() {
     return (
       <NavItem>
-        <Icon>power_settings_new</Icon>
+        Log Out <Glyphicon glyph="glyphicon glyphicon-off" />
       </NavItem>
     );
   }
