@@ -21,8 +21,8 @@ function ButtonComponent({ type, ...props }) {
   return (
     <Col>
       <ButtonToolbar>
-        <Button bsStyle="primary" type="Submit">
-          login
+        <Button bsStyle="primary" type="submit">
+          {type}
         </Button>
       </ButtonToolbar>
     </Col>

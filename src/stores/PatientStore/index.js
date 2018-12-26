@@ -6,7 +6,7 @@ import remotedev from "mobx-remotedev/lib";
 class PatientStore {
   constructor() {
     extendObservable(this, {
-      users: [],
+      patients: [],
       grabAllPatients: action(() => {
         APIclient.allUsersAPI
           .get()
@@ -17,9 +17,6 @@ class PatientStore {
           })
           .catch(err => console.log(err.message));
       }),
-      get allPatients() {
-        return this.users;
-      },
     });
   }
 }

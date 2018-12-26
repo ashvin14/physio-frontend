@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
-import App from "./App";
+import App from "./EntryComponents/App";
 import * as serviceWorker from "./serviceWorker";
 
 import ErrorBoundary from "./components/ErrorBoundary";
@@ -13,9 +13,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 //import stores
 import patientStore from "./stores/PatientStore";
+import userStore from "./stores/UserStore";
 
 const stores = {
   patientStore,
+  userStore,
 };
 
 window.app_state = stores;
