@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Container, { LoginBox } from "./";
-import { Redirect, withRouter } from "react-router-dom";
 
 class Login extends Component {
   render() {
@@ -12,4 +11,4 @@ class Login extends Component {
   }
 }
 
-export default withRouter(Login);
+export default Login;

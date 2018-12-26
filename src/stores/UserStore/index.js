@@ -11,15 +11,19 @@ class UserStore {
       user: null,
       exercises: [],
       problem: [],
+
       get getCurrUser() {
         return this.user;
       },
+
       toggleAuthenting: action(value => {
         this.authenticating = value;
       }),
+
       toggleAuthentication: action(value => {
         this.authenticated = value;
       }),
+
       authenticate: action((data, onSuccess, onFailure) => {
         this.toggleAuthenting(true);
 
@@ -28,12 +32,14 @@ class UserStore {
             .post(data)
             .then(response => {
               this.toggleAuthentication(true);
+              this.toggleAuthenting(false);
               this.user = response.data;
 
               onSuccess(response);
             })
             .catch(err => onFailure(err));
       }),
+
       signUp: action((data, onSuccess, onFailure) => {
         APIclient.patientRegisterAPI
           .post(data)
@@ -41,6 +47,23 @@ class UserStore {
             onSuccess(user);
           })
           .catch(err => onFailure(err));
+      }),
+
+      releaseUser: action(() => {
+        this.user = null;
+        this.toggleAuthentication(false);
+        this.problem = [];
+        this.exercises = [];
+      }),
+
+      logout: action(callback => {
+        APIclient.patientAuthAPI
+          .delete()
+          .then(() => {
+            this.releaseUser();
+            callback();
+          })
+          .catch(err => console.log(err));
       }),
     });
   }

@@ -1,6 +1,11 @@
 import axios from "axios";
 
-import { allPatientsUrl, patientAuthUrl, patientRegisterUrl } from "./Constant";
+import {
+  allPatientsUrl,
+  patientAuthUrl,
+  patientRegisterUrl,
+  logoutPatientUrl,
+} from "./Constant";
 
 axios.defaults.withCredentials = false;
 
@@ -14,6 +19,10 @@ const allUsersAPI = {
 const patientAuthAPI = {
   post: data =>
     axios.post(patientAuthUrl, data, {
+      headers: { "Access-Control-Allow-Origin": "http://localhost:8000" },
+    }),
+  delete: () =>
+    axios.delete(logoutPatientUrl, {
       headers: { "Access-Control-Allow-Origin": "http://localhost:8000" },
     }),
 };

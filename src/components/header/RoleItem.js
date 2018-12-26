@@ -1,12 +1,16 @@
 import React, { Component } from "react";
 import { NavItem, Glyphicon } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 
 export class RoleItem extends Component {
-  isDoctor = () => this.props.path === "doctor/login";
-  isPatient = () => this.props.path === "/";
+  state = { redirectPatient: false, redirectDoctor: false };
+  isDoctor = () => this.props.path === "/doctor/login";
+  isPatient = () => this.props.path === "/patient/login";
+
   render() {
     let { role, history } = this.props;
-    console.log(history);
+
+    if (this.state.redirectDoctor) return <Redirect to="/doctor/login" />;
 
     if (role === "doctor") {
       return (
@@ -16,7 +20,10 @@ export class RoleItem extends Component {
       );
     } else {
       return (
-        <NavItem className={this.isPatient() ? "active" : null}>
+        <NavItem
+          className={this.isPatient() ? "active" : null}
+          onClick={() => this.setState({ redirect: true })}
+        >
           Patient Login <Glyphicon glyph="glyphicon glyphicon-user" />
         </NavItem>
       );

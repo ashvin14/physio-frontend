@@ -10,7 +10,6 @@ class Header extends Component {
   state = {};
 
   render() {
-    console.log(this.props);
     let { history, userStore } = this.props;
 
     return (

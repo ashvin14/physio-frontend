@@ -11,11 +11,9 @@ class PatientStore {
         APIclient.allUsersAPI
           .get()
           .then(response => {
-            console.log(response);
-            console.log(this.users);
             this.users = [...response.data];
           })
-          .catch(err => console.log(err.message));
+          .catch(err => console.log(err)); //handle this error wisely
       }),
     });
   }
