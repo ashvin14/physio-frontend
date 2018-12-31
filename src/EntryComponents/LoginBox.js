@@ -12,29 +12,30 @@ class Login extends Component {
     this.state = {
       Error: null,
       authenticated: false,
+      roles: null,
+      singupLink: false,
     };
   }
 
-  loginSuccess = () => {
+  loginSuccess = roles => {
     this.setState({
       authenticated: true,
+      roles,
     });
-    console.log(this.state);
   };
 
   onSubmitLogin = ev => {
-    let { userStore, role } = this.props;
+    let { userStore } = this.props;
     ev.preventDefault();
 
     if (ev.target.userid.value && ev.target.pass.value) {
       let userAuthData = {
         username: ev.target.userid.value,
         password: ev.target.pass.value,
-        role,
       };
       userStore.authenticate(
         userAuthData,
-        data => this.loginSuccess(),
+        response => this.loginSuccess(response.data.roles),
         err => this.loginError(err),
       );
     }
@@ -46,17 +47,27 @@ class Login extends Component {
     });
   };
 
+  singUp = ev => this.setState({ signupLink: true });
+
   render() {
-    let { title, userStore, role } = this.props;
-    if (this.state.authenticated)
-      return <Redirect push to="/patient/account" />;
+    let { title, userStore } = this.props;
+    let { roles, authenticated, signupLink } = this.state;
+    console.log(this.props);
+
+    if (authenticated && roles) return <Redirect to={`${roles}/account`} />;
+
+    if (signupLink) return <Redirect to="patient/signup" />;
 
     return (
       <Form onSubmit={this.onSubmitLogin}>
         <FieldGroup type="Unique id" placeholder="Patient Id" name="userid" />
         <FieldGroup type="password" placeholder="password" name="pass" />
         <FormGroup>
-          <ButtonComponent type="login" />
+          <ButtonComponent
+            type="Log In"
+            signupPatient={this.signup}
+            {...this.props}
+          />
           {this.state.Error}
         </FormGroup>
       </Form>

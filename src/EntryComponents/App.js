@@ -4,11 +4,12 @@ import "../App.css";
 import { withRouter, Switch, Route, Redirect } from "react-router-dom";
 
 // delete this two lines
-import { extendObservable, action, toJS } from "mobx";
+//import { extendObservable, action, toJS } from "mobx";
 import { inject, observer } from "mobx-react";
 
 // add state management library
 import Header from "../components/header";
+import { PatientsList } from "./loadRoutes";
 import SignUpComponent from "./SignUpComponent";
 import Container, { Login } from "./";
 
@@ -25,17 +26,11 @@ class App extends Component {
           <Header history={history} />
 
           <Switch>
+            <Route exact path="/" render={() => <Redirect to="/login" />} />
             <Route
               exact
-              path="/"
-              render={() => <Redirect to="patient/login" />}
-            />
-            <Route
-              exact
-              path="/patient/login"
-              render={() => (
-                <Login type="login" role="patient" md={5} sm={12} mdPush={3} />
-              )}
+              path="/login"
+              render={() => <Login type="login" md={5} sm={12} mdPush={3} />}
             />
 
             <Route
@@ -49,11 +44,12 @@ class App extends Component {
                     sm={12}
                     mdPush={3}
                   >
-                    <SignUpComponent role="patient" />
+                    <SignUpComponent roles="patient" />
                   </Container>
                 );
               }}
             />
+            <Route path="/doctor" render={() => <PatientsList />} />
             <Route render={() => <h1>404 not found</h1>} />
           </Switch>
         </section>

@@ -2,27 +2,27 @@ import axios from "axios";
 
 import {
   allPatientsUrl,
-  patientAuthUrl,
+  userAuthUrl,
   patientRegisterUrl,
-  logoutPatientUrl,
+  logoutUserUrl,
 } from "./Constant";
 
 axios.defaults.withCredentials = false;
 
-const allUsersAPI = {
+const allPatientsAPI = {
   get: () =>
     axios.get(allPatientsUrl, {
       headers: { "Access-Control-Allow-Origin": "http://localhost:8000" },
     }),
 };
 
-const patientAuthAPI = {
+const userAuthAPI = {
   post: data =>
-    axios.post(patientAuthUrl, data, {
+    axios.post(userAuthUrl, data, {
       headers: { "Access-Control-Allow-Origin": "http://localhost:8000" },
     }),
   delete: () =>
-    axios.delete(logoutPatientUrl, {
+    axios.delete(logoutUserUrl, {
       headers: { "Access-Control-Allow-Origin": "http://localhost:8000" },
     }),
 };
@@ -34,6 +34,10 @@ const patientRegisterAPI = {
     }),
 };
 
-const APIclient = { allUsersAPI, patientAuthAPI, patientRegisterAPI };
+const APIclient = {
+  allPatientsAPI,
+  patientRegisterAPI,
+  userAuthAPI,
+};
 
 export default APIclient;

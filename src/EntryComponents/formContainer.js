@@ -18,7 +18,7 @@ export default class FormContainer extends Component {
     return (
       <Row>
         <Col {...this.props}>
-          <Panel>
+          <Panel bsStyle={"info"}>
             <Panel.Heading>
               {role} {type}
             </Panel.Heading>

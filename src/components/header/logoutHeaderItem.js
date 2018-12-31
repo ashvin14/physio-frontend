@@ -15,11 +15,9 @@ class LogoutHeaderItem extends Component {
 
   logout = ev => {
     let { userStore } = this.props;
-    let { roles } = this.props.userStore.user;
-    if (roles == "patient") {
-      userStore.logout();
-      this.logoutSuccessful();
-    }
+
+    userStore.logout();
+    this.logoutSuccessful();
   };
 
   render() {

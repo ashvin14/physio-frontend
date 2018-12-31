@@ -23,7 +23,7 @@ class signUpComponent extends Component {
   };
 
   onSubmitSignup = ev => {
-    let { userStore, role } = this.props;
+    let { userStore, roles } = this.props;
     ev.preventDefault();
 
     if (ev.target.userid.value && ev.target.pass.value) {
@@ -32,7 +32,7 @@ class signUpComponent extends Component {
         password: ev.target.pass.value,
         patientName: ev.target.patientName.value,
         Age: ev.target.age.value,
-        role,
+        roles,
       };
       userStore.signUp(
         userAuthData,

@@ -17,13 +17,16 @@ function FieldGroup({ ...props }) {
     </FormGroup>
   );
 }
-function ButtonComponent({ type, ...props }) {
+function ButtonComponent({ type, signupPatient, ...props }) {
   return (
     <Col>
       <ButtonToolbar>
         <Button bsStyle="primary" type="submit">
           {type}
         </Button>
+        {props.location && props.location.pathname === "/login" ? (
+          <Button>Sign Up</Button>
+        ) : null}
       </ButtonToolbar>
     </Col>
   );

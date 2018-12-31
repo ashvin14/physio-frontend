@@ -10,7 +10,7 @@ class Header extends Component {
   state = {};
 
   render() {
-    let { history, userStore } = this.props;
+    let { userStore } = this.props;
 
     return (
       <Navbar collapseOnSelect>
@@ -21,8 +21,7 @@ class Header extends Component {
             </Nav>
           ) : (
             <Nav pullRight>
-              <RoleItem role="doctor" path={this.props.location.pathname} />{" "}
-              <RoleItem role="patient" path={this.props.location.pathname} />
+              <RoleItem path={this.props.location.pathname} />
             </Nav>
           )}
         </Navbar.Collapse>

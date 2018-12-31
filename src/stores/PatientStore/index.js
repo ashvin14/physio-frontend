@@ -8,13 +8,16 @@ class PatientStore {
     extendObservable(this, {
       patients: [],
       grabAllPatients: action(() => {
-        APIclient.allUsersAPI
+        APIclient.allPatientsAPI
           .get()
           .then(response => {
-            this.users = [...response.data];
+            this.patients = [...response.data];
           })
           .catch(err => console.log(err)); //handle this error wisely
       }),
+      get allPatients() {
+        return this.patients;
+      },
     });
   }
 }

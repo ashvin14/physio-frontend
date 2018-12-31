@@ -1,9 +1,9 @@
 const ROOT_URL = process.env.REACT_APP_ROOT_URL;
 
-const allPatientsUrl = `${ROOT_URL}`;
+const allPatientsUrl = `${ROOT_URL}/doctor/patients`;
 
-const patientAuthUrl = `${ROOT_URL}/patient/login`;
-const patientRegisterUrl = `${ROOT_URL}/patient/signup`;
-const logoutPatientUrl = `${ROOT_URL}/patient/signOut`;
+const userAuthUrl = `${ROOT_URL}/login`;
+const patientRegisterUrl = `${ROOT_URL}/signup`;
+const logoutUserUrl = `${ROOT_URL}/signOut`;
 
-export { allPatientsUrl, patientAuthUrl, patientRegisterUrl, logoutPatientUrl };
+export { allPatientsUrl, userAuthUrl, patientRegisterUrl, logoutUserUrl };

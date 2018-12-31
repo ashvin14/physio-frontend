@@ -27,17 +27,16 @@ class UserStore {
       authenticate: action((data, onSuccess, onFailure) => {
         this.toggleAuthenting(true);
 
-        if (data.role === "patient")
-          APIclient.patientAuthAPI
-            .post(data)
-            .then(response => {
-              this.toggleAuthentication(true);
-              this.toggleAuthenting(false);
-              this.user = response.data;
+        APIclient.userAuthAPI
+          .post(data)
+          .then(response => {
+            this.toggleAuthentication(true);
+            this.toggleAuthenting(false);
+            this.user = response.data;
 
-              onSuccess(response);
-            })
-            .catch(err => onFailure(err));
+            onSuccess(response);
+          })
+          .catch(err => onFailure(err));
       }),
 
       signUp: action((data, onSuccess, onFailure) => {
@@ -57,7 +56,7 @@ class UserStore {
       }),
 
       logout: action(callback => {
-        APIclient.patientAuthAPI
+        APIclient.userAuthAPI
           .delete()
           .then(() => {
             this.releaseUser();

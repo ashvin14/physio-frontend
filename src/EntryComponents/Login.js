@@ -5,7 +5,7 @@ class Login extends Component {
   render() {
     return (
       <Container {...this.props}>
-        <LoginBox role={this.props.role} />
+        <LoginBox />
       </Container>
     );
   }
