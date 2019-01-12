@@ -12,6 +12,7 @@ import Header from "../components/header";
 import { PatientsList } from "./loadRoutes";
 import SignUpComponent from "./SignUpComponent";
 import Container, { Login } from "./";
+import DoctorAuth from "../utilityComponents/DoctorAuth";
 
 class App extends Component {
   componentDidMount() {
@@ -49,7 +50,14 @@ class App extends Component {
                 );
               }}
             />
-            <Route path="/doctor/account" render={() => <PatientsList />} />
+            <Route
+              path="/doctor/account"
+              render={() => (
+                <DoctorAuth>
+                  <PatientsList />
+                </DoctorAuth>
+              )}
+            />
             <Route render={() => <h1>404 not found</h1>} />
           </Switch>
         </section>

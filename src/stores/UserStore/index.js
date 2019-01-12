@@ -9,11 +9,19 @@ class UserStore {
       authenticating: false,
       authenticated: false,
       user: null,
+      role: null,
       exercises: [],
       problem: [],
 
       get getCurrUser() {
         return this.user;
+      },
+
+      get isDoctor() {
+        return this.role === "doctor";
+      },
+      get isPatient() {
+        return this.role === "patient";
       },
 
       toggleAuthenting: action(value => {
@@ -33,6 +41,7 @@ class UserStore {
             this.toggleAuthentication(true);
             this.toggleAuthenting(false);
             this.user = response.data;
+            this.role = response.data.roles;
 
             onSuccess(response);
           })

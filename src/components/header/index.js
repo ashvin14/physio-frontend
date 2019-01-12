@@ -4,7 +4,7 @@ import { HeaderItems } from "./headerItems";
 import LogoutHeaderItem from "./logoutHeaderItem";
 import { RoleItem } from "./RoleItem";
 import { withRouter } from "react-router-dom";
-import { observer, inject } from "mobx-react";
+import { inject, observer } from "mobx-react";
 
 class Header extends Component {
   state = {};
