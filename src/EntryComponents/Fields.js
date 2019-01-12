@@ -25,7 +25,7 @@ function ButtonComponent({ type, signupPatient, ...props }) {
           {type}
         </Button>
         {props.location && props.location.pathname === "/login" ? (
-          <Button>Sign Up</Button>
+          <Button onClick={signupPatient}>Sign Up</Button>
         ) : null}
       </ButtonToolbar>
     </Col>

@@ -13,7 +13,7 @@ class Header extends Component {
     let { userStore } = this.props;
 
     return (
-      <Navbar collapseOnSelect>
+      <Navbar>
         <Navbar.Collapse>
           {userStore.authenticated ? (
             <Nav pullRight>

@@ -3,14 +3,19 @@ import { NavItem, Glyphicon } from "react-bootstrap";
 import { Redirect } from "react-router-dom";
 
 export class RoleItem extends Component {
-  state = { redirectPatient: false, redirectDoctor: false };
+  state = { redirectLogin: false };
   isLoginPath = () => this.props.path === "/login";
+
+  redirectToLogin = () => this.setState({ redirectPatient: true });
 
   render() {
     let { history } = this.props;
-
+    if (this.state.redirectPatient) return <Redirect to="/login" />;
     return (
-      <NavItem className={this.isLoginPath() ? "active" : null}>
+      <NavItem
+        className={this.isLoginPath() ? "active" : null}
+        onClick={this.redirectToLogin}
+      >
         Login <Glyphicon glyph="glyphicon glyphicon-plus" />
       </NavItem>
     );

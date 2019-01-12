@@ -5,12 +5,13 @@ import { FieldGroup, ButtonComponent } from "./Fields";
 import { Form, FormGroup, FormControl } from "react-bootstrap";
 import { extendObservable, action, toJS } from "mobx";
 import { inject, observer } from "mobx-react";
+import { FailedSignIn } from "./ActionMessages";
 
 class Login extends Component {
   constructor() {
     super();
     this.state = {
-      Error: null,
+      error: false,
       authenticated: false,
       roles: null,
       singupLink: false,
@@ -41,22 +42,27 @@ class Login extends Component {
     }
   };
 
-  loginError = () => {
-    this.setState({
-      Error: "* password or username is incorrect",
-    });
-  };
+  loginError = () => this.setState({ error: true });
 
-  singUp = ev => this.setState({ signupLink: true });
+  signup = ev => this.setState({ signupLink: true });
 
   render() {
     let { title, userStore } = this.props;
     let { roles, authenticated, signupLink } = this.state;
-    console.log(this.props);
 
     if (authenticated && roles) return <Redirect to={`${roles}/account`} />;
 
     if (signupLink) return <Redirect to="patient/signup" />;
+
+    if (this.state.error)
+      return (
+        <FailedSignIn
+          errors={this.state.error}
+          message={"username or password doesnt match"}
+          title={"Authentication Failed"}
+        />
+      );
+    console.log(this.state.error);
 
     return (
       <Form onSubmit={this.onSubmitLogin}>
@@ -68,7 +74,6 @@ class Login extends Component {
             signupPatient={this.signup}
             {...this.props}
           />
-          {this.state.Error}
         </FormGroup>
       </Form>
     );

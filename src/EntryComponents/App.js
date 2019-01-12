@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import logo from "../logo.svg";
-import "../App.css";
+import "./App.css";
 import { withRouter, Switch, Route, Redirect } from "react-router-dom";
 
 // delete this two lines
@@ -49,7 +49,7 @@ class App extends Component {
                 );
               }}
             />
-            <Route path="/doctor" render={() => <PatientsList />} />
+            <Route path="/doctor/account" render={() => <PatientsList />} />
             <Route render={() => <h1>404 not found</h1>} />
           </Switch>
         </section>
