@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Tabs, Tab, Row } from "react-bootstrap";
+import GraphGenerator from "./GraphGenerator";
 
 class TabComponent extends Component {
   state = { key: 1 };
@@ -17,7 +18,7 @@ class TabComponent extends Component {
         onSelect={this.handleChange}
       >
         <Tab eventKey={"1"} title={"Graph"}>
-          <h1>Graph</h1>
+          <GraphGenerator />
         </Tab>
         <Tab eventKey={"2"} title={"problems"}>
           <h1>problems</h1>
