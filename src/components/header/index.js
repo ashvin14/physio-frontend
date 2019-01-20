@@ -17,7 +17,8 @@ class Header extends Component {
         <Navbar.Collapse>
           {userStore.authenticated ? (
             <Nav pullRight>
-              <HeaderItems /> <LogoutHeaderItem />
+              <HeaderItems showSignUpComponent={this.props.showSignUp} />{" "}
+              <LogoutHeaderItem />
             </Nav>
           ) : (
             <Nav pullRight>

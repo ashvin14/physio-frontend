@@ -13,8 +13,21 @@ import { PatientsList } from "./loadRoutes";
 import SignUpComponent from "./SignUpComponent";
 import Container, { Login } from "./";
 import DoctorAuth from "../utilityComponents/DoctorAuth";
+import { Modal } from "react-bootstrap";
 
 class App extends Component {
+  state = { show: false };
+
+  showSignUp = () => this.setState({ show: true });
+  handleClose = () => this.setState({ show: false });
+
+  showSignUpComponent = () => (
+    <Modal show={this.state.show} onHide={this.handleClose}>
+      <Container type="Add Patient" md={12} sm={12}>
+        <SignUpComponent roles="patient" />
+      </Container>
+    </Modal>
+  );
   componentDidMount() {
     const { userStore } = this.props;
   }
@@ -24,8 +37,8 @@ class App extends Component {
     return (
       <div className="App">
         <section>
-          <Header history={history} />
-
+          <Header history={history} showSignUp={this.showSignUp} />
+          {this.showSignUpComponent()}
           <Switch>
             <Route exact path="/" render={() => <Redirect to="/login" />} />
             <Route
@@ -33,25 +46,9 @@ class App extends Component {
               path="/login"
               render={() => <Login type="login" md={5} sm={12} mdPush={3} />}
             />
-
-            <Route
-              path="/patient/signup"
-              render={() => {
-                return (
-                  <Container
-                    type="signup"
-                    role="patient"
-                    md={5}
-                    sm={12}
-                    mdPush={3}
-                  >
-                    <SignUpComponent roles="patient" />
-                  </Container>
-                );
-              }}
             />
             <Route
-              path="/doctor/account"
+              path="/doctor/"
               render={() => (
                 <DoctorAuth>
                   <PatientsList />

@@ -50,7 +50,7 @@ class Login extends Component {
     let { title, userStore } = this.props;
     let { roles, authenticated, signupLink } = this.state;
 
-    if (authenticated && roles) return <Redirect to={`${roles}/account`} />;
+    if (authenticated && roles) return <Redirect to={`${roles}/`} />;
 
     if (signupLink) return <Redirect to="patient/signup" />;
 

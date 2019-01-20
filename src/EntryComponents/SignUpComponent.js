@@ -6,7 +6,7 @@ import { Form, FormGroup, FormControl } from "react-bootstrap";
 import { extendObservable, action, toJS } from "mobx";
 import { inject, observer } from "mobx-react";
 
-class signUpComponent extends Component {
+class SignUpComponent extends Component {
   constructor() {
     super();
     this.state = {
@@ -72,4 +72,4 @@ class signUpComponent extends Component {
   }
 }
 
-export default inject("userStore")(withRouter(observer(signUpComponent)));
+export default inject("userStore")(withRouter(observer(SignUpComponent)));

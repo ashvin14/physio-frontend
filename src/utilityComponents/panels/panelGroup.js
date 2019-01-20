@@ -1,8 +1,7 @@
 import React, { Component } from "react";
-import { PanelGroup, Row, Col, Grid } from "react-bootstrap";
-import { PanelListElement } from "./";
+import { Table, Row, Col, Grid } from "react-bootstrap";
+import { TableListElement } from "./";
 import { observer, inject } from "mobx-react";
-import TabComponent from "./Tabs";
 
 class PanelComponent extends Component {
   state = { activeKey: 0 };
@@ -15,29 +14,29 @@ class PanelComponent extends Component {
     patientStore.grabAllPatients();
   }
   render() {
-    let { patientStore } = this.props;
+    let { patientStore, filteredOptions } = this.props;
     let { allPatients } = patientStore;
 
     return (
       <Grid>
         <Row>
           <Col md={9} sm={12}>
-            <PanelGroup
-              accordion
-              id="accordion-controlled-example"
-              activeKey={this.state.activeKey}
-              onSelect={this.handleSelect}
-            >
-              {allPatients.map((patient, index) => (
-                <PanelListElement
-                  key={index}
-                  name={patient.patientName}
-                  eventKey={index + 1}
-                >
-                  <TabComponent />
-                </PanelListElement>
-              ))}
-            </PanelGroup>
+            <Table responsive hover stripped>
+              <thead>
+                <tr>
+                  <td>#</td>
+                  <td>Full Name</td>
+                  <td>User Name</td>
+                  <td>Age</td>
+                  <td>Gender</td>
+                </tr>
+              </thead>
+              <tbody>
+                {allPatients.map((patient, index) => (
+                  <TableListElement index={index} patient={patient} />
+                ))}
+              </tbody>
+            </Table>
           </Col>
         </Row>
       </Grid>

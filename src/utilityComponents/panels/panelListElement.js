@@ -1,17 +1,24 @@
 import React, { Component } from "react";
-import { Panel } from "react-bootstrap";
+import { Panel, Table } from "react-bootstrap";
+import { NavLink } from "react-router-dom";
 
-export default class panelListItem extends Component {
+export default class TableListElement extends Component {
   render() {
-    let { eventKey, name, children } = this.props;
-    console.log("eventKey:" + eventKey);
+    let { patient, index } = this.props;
+    console.log(patient);
     return (
-      <Panel eventKey={eventKey}>
-        <Panel.Heading>
-          <Panel.Title toggle>{name}</Panel.Title>
-        </Panel.Heading>
-        <Panel.Body collapsible>{children}</Panel.Body>
-      </Panel>
+      <tr>
+        <td>{index + 1}</td>
+
+        <td>
+          <NavLink to={`./patient?userId=${patient.user_id}`}>
+            {patient.fullname}
+          </NavLink>
+        </td>
+        <td>{patient.username}</td>
+        <td>{patient.age}</td>
+        <td>{patient.gender}</td>
+      </tr>
     );
   }
 }
