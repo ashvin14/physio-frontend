@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import FormContainer from "./formContainer";
 import { Redirect, withRouter } from "react-router-dom";
 import { FieldGroup, ButtonComponent } from "./Fields";
-import { Form, FormGroup, FormControl } from "react-bootstrap";
+import { Form, FormGroup, Radio, Checkbox, FormControl } from "react-bootstrap";
 import { extendObservable, action, toJS } from "mobx";
 import { inject, observer } from "mobx-react";
 
@@ -12,6 +12,10 @@ class SignUpComponent extends Component {
     this.state = {
       Error: null,
       authenticated: false,
+      diag: [
+        {id: 1, value: "Elbow", isChecked: false},
+        {id: 2, value: "Wrist", isChecked: false},
+      ]
     };
   }
 
@@ -28,11 +32,13 @@ class SignUpComponent extends Component {
 
     if (ev.target.userid.value && ev.target.pass.value) {
       let userAuthData = {
+        fullname: ev.target.fullname.value,
         username: ev.target.userid.value,
-        password: ev.target.pass.value,
-        patientName: ev.target.patientName.value,
-        Age: ev.target.age.value,
-        roles,
+        password: ev.target.pass.value,        
+        age: ev.target.age.value,
+        mobile: ev.target.mobile.value,
+        gender: ev.target.gender.value,
+        diagnosed: ev.target.diagnosed.value
       };
       userStore.signUp(
         userAuthData,
@@ -54,17 +60,35 @@ class SignUpComponent extends Component {
 
     return (
       <Form onSubmit={this.onSubmitSignup}>
-        <FieldGroup type="Unique id" placeholder="username" name="userid" />
-        <FieldGroup type="password" placeholder="password" name="pass" />
-        <FieldGroup
-          type="patientName"
-          placeholder="patient's Name"
-          name="patientName"
-        />
-        <FieldGroup type="Number" placeholder="Age" name="age" />
-
+        <FieldGroup type="text" placeholder="Patient's Name" name="fullname" />
+        <FieldGroup type="text" placeholder="Username" name="userid" />
+        <FieldGroup type="password" placeholder="Password" name="pass" />
+        <FieldGroup type="number" placeholder="Age" name="age" />
+        <FieldGroup type="number" placeholder="Mobile No." name="mobile" />
         <FormGroup>
-          <ButtonComponent type="sign up" />
+          <strong>GENDER</strong>
+          <Radio name="gender" value="Male">
+            Male
+          </Radio>{' '}
+          <Radio name="gender" value="Female">
+            Female
+          </Radio>
+       </FormGroup>
+        <FormGroup>
+          <strong>DIAGNOSED</strong>
+          <Checkbox
+            name="diagnosed"
+            value="Elbow">
+            Elbow
+          </Checkbox>
+          <Checkbox
+            name="diagnosed"
+            value="Wrist">
+            Wrist
+          </Checkbox>
+        </FormGroup>
+        <FormGroup>
+          <ButtonComponent type="SignUp" />
           {this.state.Error}
         </FormGroup>
       </Form>

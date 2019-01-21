@@ -29,6 +29,8 @@ class PanelComponent extends Component {
                   <td>User Name</td>
                   <td>Age</td>
                   <td>Gender</td>
+                  <td>Mobile</td>
+                  <td>Diagnosed</td>
                 </tr>
               </thead>
               <tbody>

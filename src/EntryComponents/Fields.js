@@ -29,4 +29,5 @@ function ButtonComponent({ type, signupPatient, ...props }) {
   );
 }
 
-export { FieldGroup, ButtonComponent };
+
+export { FieldGroup, ButtonComponent, };

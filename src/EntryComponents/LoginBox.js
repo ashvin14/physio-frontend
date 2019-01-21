@@ -66,8 +66,8 @@ class Login extends Component {
 
     return (
       <Form onSubmit={this.onSubmitLogin}>
-        <FieldGroup type="Unique id" placeholder="Patient Id" name="userid" />
-        <FieldGroup type="password" placeholder="password" name="pass" />
+        <FieldGroup type="text" placeholder="Username" name="userid" />
+        <FieldGroup type="password" placeholder="Password" name="pass" />
         <FormGroup>
           <ButtonComponent
             type="Log In"

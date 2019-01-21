@@ -18,6 +18,8 @@ export default class TableListElement extends Component {
         <td>{patient.username}</td>
         <td>{patient.age}</td>
         <td>{patient.gender}</td>
+        <td>{patient.mobile}</td>
+        <td>{patient.diagnosed}</td>      
       </tr>
     );
   }
