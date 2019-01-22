@@ -11,7 +11,7 @@ export default class TableListElement extends Component {
         <td>{index + 1}</td>
 
         <td>
-          <NavLink to={`./patient?userId=${patient.user_id}`}>
+          <NavLink to={`./patient/${patient.user_id}`}>
             {patient.fullname}
           </NavLink>
         </td>
@@ -19,7 +19,6 @@ export default class TableListElement extends Component {
         <td>{patient.age}</td>
         <td>{patient.gender}</td>
         <td>{patient.mobile}</td>
-        <td>{patient.diagnosed}</td>      
       </tr>
     );
   }

@@ -8,8 +8,9 @@ import { inject, observer } from "mobx-react";
 import { FailedSignIn } from "./ActionMessages";
 
 class Login extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    console.log(props);
     this.state = {
       error: false,
       authenticated: false,
@@ -42,7 +43,12 @@ class Login extends Component {
     }
   };
 
-  loginError = () => this.setState({ error: true });
+  loginError = error => {
+    this.props.toggleErrorState({
+      title: "Something went wrong :/",
+      message: error.response.data,
+    });
+  };
 
   signup = ev => this.setState({ signupLink: true });
 
@@ -53,16 +59,6 @@ class Login extends Component {
     if (authenticated && roles) return <Redirect to={`${roles}/`} />;
 
     if (signupLink) return <Redirect to="patient/signup" />;
-
-    if (this.state.error)
-      return (
-        <FailedSignIn
-          errors={this.state.error}
-          message={"username or password doesnt match"}
-          title={"Authentication Failed"}
-        />
-      );
-    console.log(this.state.error);
 
     return (
       <Form onSubmit={this.onSubmitLogin}>

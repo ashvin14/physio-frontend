@@ -7,7 +7,7 @@ import {
   logoutUserUrl,
 } from "./Constant";
 
-axios.defaults.withCredentials = false;
+axios.defaults.withCredentials = true;
 
 const allPatientsAPI = {
   get: () =>

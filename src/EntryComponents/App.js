@@ -14,6 +14,7 @@ import SignUpComponent from "./SignUpComponent";
 import Container, { Login } from "./";
 import DoctorAuth from "../utilityComponents/DoctorAuth";
 import { Modal } from "react-bootstrap";
+import PatientAnalytics from "../utilityComponents/PatientAnalytics";
 
 class App extends Component {
   state = { show: false };
@@ -24,7 +25,7 @@ class App extends Component {
   showSignUpComponent = () => (
     <Modal show={this.state.show} onHide={this.handleClose}>
       <Container type="Add Patient" md={12} sm={12}>
-        <SignUpComponent roles="patient" />
+        <SignUpComponent roles="patient" handleClose={this.handleClose} />
       </Container>
     </Modal>
   );
@@ -48,10 +49,20 @@ class App extends Component {
             />
             />
             <Route
-              path="/doctor/"
+              exact
+              path="/doctor"
               render={() => (
                 <DoctorAuth>
                   <PatientsList />
+                </DoctorAuth>
+              )}
+            />
+            <Route
+              exact
+              path="/doctor/patient/:patientId"
+              render={() => (
+                <DoctorAuth>
+                  <PatientAnalytics />
                 </DoctorAuth>
               )}
             />

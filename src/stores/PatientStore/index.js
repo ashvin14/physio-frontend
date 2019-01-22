@@ -18,6 +18,7 @@ class PatientStore {
       get allPatients() {
         return this.patients;
       },
+      pushPatient: action(data => this.patients.push(data)),
     });
   }
 }

@@ -6,24 +6,26 @@ import { Form, FormGroup, Radio, Checkbox, FormControl } from "react-bootstrap";
 import { extendObservable, action, toJS } from "mobx";
 import { inject, observer } from "mobx-react";
 
+import Picky from "react-picky";
+import "react-picky/dist/picky.css";
+
 class SignUpComponent extends Component {
   constructor() {
     super();
     this.state = {
-      Error: null,
-      authenticated: false,
-      diag: [
-        {id: 1, value: "Elbow", isChecked: false},
-        {id: 2, value: "Wrist", isChecked: false},
-      ]
+      diagonised: [],
+      gender: "",
     };
   }
 
-  loginSuccess = () => {
+  loginSuccess = data => {
+    console.log(data);
     this.setState({
       authenticated: true,
     });
-    console.log(this.state);
+
+    this.props.patientStore.pushPatient(data);
+    this.props.handleClose();
   };
 
   onSubmitSignup = ev => {
@@ -34,29 +36,41 @@ class SignUpComponent extends Component {
       let userAuthData = {
         fullname: ev.target.fullname.value,
         username: ev.target.userid.value,
-        password: ev.target.pass.value,        
+        password: ev.target.pass.value,
         age: ev.target.age.value,
         mobile: ev.target.mobile.value,
-        gender: ev.target.gender.value,
-        diagnosed: ev.target.diagnosed.value
+        gender: this.state.gender,
+        diagonised: this.state.diagonised,
+        roles: this.props.roles,
       };
       userStore.signUp(
         userAuthData,
-        data => this.loginSuccess(),
+        response => this.loginSuccess(response.data),
         err => this.loginError(err),
       );
     }
   };
 
-  loginError = () => {
-    this.setState({
-      Error: "* data cannot be saved",
+  loginError = error => {
+    this.props.toggleErrorState({
+      title: "data Cannot be saved",
+      message: error.response.data,
     });
   };
 
+  onCheckBoxChange = selected => {
+    this.setState(prevState => ({
+      diagonised: selected,
+    }));
+  };
+
+  onChangeGender = value =>
+    this.setState({
+      gender: value,
+    });
   render() {
     let { title, userStore, role } = this.props;
-    if (this.state.authenticated) return <Redirect push to="/" />;
+    const options = ["Wrist", "Elbow"];
 
     return (
       <Form onSubmit={this.onSubmitSignup}>
@@ -67,33 +81,31 @@ class SignUpComponent extends Component {
         <FieldGroup type="number" placeholder="Mobile No." name="mobile" />
         <FormGroup>
           <strong>GENDER</strong>
-          <Radio name="gender" value="Male">
-            Male
-          </Radio>{' '}
-          <Radio name="gender" value="Female">
-            Female
-          </Radio>
-       </FormGroup>
+
+          <Picky
+            options={["male", "female"]}
+            onChange={this.onChangeGender}
+            value={this.state.gender}
+          />
+        </FormGroup>
         <FormGroup>
           <strong>DIAGNOSED</strong>
-          <Checkbox
-            name="diagnosed"
-            value="Elbow">
-            Elbow
-          </Checkbox>
-          <Checkbox
-            name="diagnosed"
-            value="Wrist">
-            Wrist
-          </Checkbox>
+
+          <Picky
+            options={options}
+            onChange={this.onCheckBoxChange}
+            value={this.state.diagonised}
+            multiple
+          />
         </FormGroup>
         <FormGroup>
           <ButtonComponent type="SignUp" />
-          {this.state.Error}
         </FormGroup>
       </Form>
     );
   }
 }
 
-export default inject("userStore")(withRouter(observer(SignUpComponent)));
+export default inject("userStore", "patientStore")(
+  withRouter(observer(SignUpComponent)),
+);
