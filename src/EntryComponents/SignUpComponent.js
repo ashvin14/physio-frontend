@@ -13,7 +13,7 @@ class SignUpComponent extends Component {
   constructor() {
     super();
     this.state = {
-      diagonised: [],
+      diagnosed: [],
       gender: "Male",
     };
   }
@@ -40,7 +40,7 @@ class SignUpComponent extends Component {
         age: ev.target.age.value,
         mobile: ev.target.mobile.value,
         gender: this.state.gender,
-        diagnosed: this.state.diagonised,
+        diagnosed: this.state.diagnosed,
         roles: this.props.roles,
       };
       userStore.signUp(
@@ -90,7 +90,7 @@ class SignUpComponent extends Component {
           />
         </FormGroup>
         <FormGroup>
-          <strong>DIAGNOSED</strong>
+          <strong>diagnosed</strong>
 
           <Picky
             options={options}
