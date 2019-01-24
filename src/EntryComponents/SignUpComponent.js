@@ -13,8 +13,8 @@ class SignUpComponent extends Component {
   constructor() {
     super();
     this.state = {
-      diagnosed: [],
-      gender: "",
+      diagonised: [],
+      gender: "Male",
     };
   }
 
@@ -23,7 +23,7 @@ class SignUpComponent extends Component {
     this.setState({
       authenticated: true,
     });
-
+    console.log(data);
     this.props.patientStore.pushPatient(data);
     this.props.handleClose();
   };
@@ -40,7 +40,7 @@ class SignUpComponent extends Component {
         age: ev.target.age.value,
         mobile: ev.target.mobile.value,
         gender: this.state.gender,
-        diagnosed: this.state.diagnosed,
+        diagnosed: this.state.diagonised,
         roles: this.props.roles,
       };
       userStore.signUp(
@@ -68,6 +68,7 @@ class SignUpComponent extends Component {
     this.setState({
       gender: value,
     });
+
   render() {
     let { title, userStore, role } = this.props;
     const options = ["Wrist", "Elbow"];
@@ -83,7 +84,7 @@ class SignUpComponent extends Component {
           <strong>GENDER</strong>
 
           <Picky
-            options={["male", "female"]}
+            options={["Male", "Female"]}
             onChange={this.onChangeGender}
             value={this.state.gender}
           />
@@ -99,7 +100,7 @@ class SignUpComponent extends Component {
           />
         </FormGroup>
         <FormGroup>
-          <ButtonComponent type="SignUp" />
+          <ButtonComponent type="Add Patient" block bsSize="large" />
         </FormGroup>
       </Form>
     );

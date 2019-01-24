@@ -21,7 +21,7 @@ function ButtonComponent({ type, signupPatient, ...props }) {
   return (
     <Col>
       <ButtonToolbar>
-        <Button bsStyle="primary" type="submit">
+        <Button bsStyle="primary" type="submit" {...props}>
           {type}
         </Button>
       </ButtonToolbar>
@@ -29,5 +29,4 @@ function ButtonComponent({ type, signupPatient, ...props }) {
   );
 }
 
-
-export { FieldGroup, ButtonComponent, };
+export { FieldGroup, ButtonComponent };
