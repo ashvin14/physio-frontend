@@ -13,7 +13,7 @@ class SignUpComponent extends Component {
   constructor() {
     super();
     this.state = {
-      diagonised: [],
+      diagnosed: [],
       gender: "",
     };
   }
@@ -40,7 +40,7 @@ class SignUpComponent extends Component {
         age: ev.target.age.value,
         mobile: ev.target.mobile.value,
         gender: this.state.gender,
-        diagonised: this.state.diagonised,
+        diagnosed: this.state.diagnosed,
         roles: this.props.roles,
       };
       userStore.signUp(
@@ -60,7 +60,7 @@ class SignUpComponent extends Component {
 
   onCheckBoxChange = selected => {
     this.setState(prevState => ({
-      diagonised: selected,
+      diagnosed: selected,
     }));
   };
 
@@ -94,7 +94,7 @@ class SignUpComponent extends Component {
           <Picky
             options={options}
             onChange={this.onCheckBoxChange}
-            value={this.state.diagonised}
+            value={this.state.diagnosed}
             multiple
           />
         </FormGroup>

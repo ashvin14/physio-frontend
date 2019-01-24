@@ -19,6 +19,7 @@ export default class TableListElement extends Component {
         <td>{patient.age}</td>
         <td>{patient.gender}</td>
         <td>{patient.mobile}</td>
+        <td>{patient.diagnosed.length !== 1  ? patient.diagnosed.map((value, index) => value + " ,") : patient.diagnosed}</td>      
       </tr>
     );
   }
