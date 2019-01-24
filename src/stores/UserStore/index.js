@@ -2,6 +2,7 @@ import { extendObservable, action } from "mobx";
 import axios from "axios";
 import APIclient from "../../apiclient";
 import remotedev from "mobx-remotedev/lib";
+import UtilityMethods from "../../UtilityMethods";
 
 class UserStore {
   constructor() {
@@ -9,7 +10,7 @@ class UserStore {
       authenticating: false,
       authenticated: false,
       user: null,
-      role: null,
+      roles: null,
       exercises: [],
       problem: [],
 
@@ -18,10 +19,10 @@ class UserStore {
       },
 
       get isDoctor() {
-        return this.role === "doctor";
+        return UtilityMethods.getUserSession().user.roles === "doctor";
       },
       get isPatient() {
-        return this.role === "patient";
+        return UtilityMethods.getUserSession().user.roles === "patient";
       },
 
       toggleAuthenting: action(value => {
@@ -41,7 +42,7 @@ class UserStore {
             this.toggleAuthentication(true);
             this.toggleAuthenting(false);
             this.user = response.data;
-            this.role = response.data.roles;
+            this.roles = response.data.roles;
 
             onSuccess(response);
           })
@@ -64,11 +65,19 @@ class UserStore {
         this.exercises = [];
       }),
 
+      setUser: action(user => {
+        this.user = user;
+        this.toggleAuthentication(true);
+        this.toggleAuthenting(false);
+        this.roles = user.roles;
+      }),
+
       logout: action(callback => {
         APIclient.userAuthAPI
           .delete()
           .then(() => {
             this.releaseUser();
+            UtilityMethods.removeUserSession();
             callback();
           })
           .catch(err => console.log(err));

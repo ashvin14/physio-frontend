@@ -20,11 +20,7 @@ class Header extends Component {
               <HeaderItems showSignUpComponent={this.props.showSignUp} />{" "}
               <LogoutHeaderItem />
             </Nav>
-          ) : (
-            <Nav pullRight>
-              <RoleItem path={this.props.location.pathname} />
-            </Nav>
-          )}
+          ) : null}
         </Navbar.Collapse>
       </Navbar>
     );

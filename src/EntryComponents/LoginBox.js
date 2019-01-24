@@ -6,6 +6,7 @@ import { Form, FormGroup, FormControl } from "react-bootstrap";
 import { extendObservable, action, toJS } from "mobx";
 import { inject, observer } from "mobx-react";
 import { FailedSignIn } from "./ActionMessages";
+import UtilityMethods from "../UtilityMethods";
 
 class Login extends Component {
   constructor(props) {
@@ -15,11 +16,16 @@ class Login extends Component {
       error: false,
       authenticated: false,
       roles: null,
-      singupLink: false,
     };
   }
 
-  loginSuccess = roles => {
+  loginSuccess = user => {
+    let { roles } = user;
+
+    UtilityMethods.setUserSession(user, {
+      authenticated: true,
+      authenticating: false,
+    });
     this.setState({
       authenticated: true,
       roles,
@@ -37,7 +43,7 @@ class Login extends Component {
       };
       userStore.authenticate(
         userAuthData,
-        response => this.loginSuccess(response.data.roles),
+        response => this.loginSuccess(response.data),
         err => this.loginError(err),
       );
     }
@@ -50,15 +56,14 @@ class Login extends Component {
     });
   };
 
-  signup = ev => this.setState({ signupLink: true });
-
   render() {
     let { title, userStore } = this.props;
-    let { roles, authenticated, signupLink } = this.state;
+    let { roles, authenticated } = this.state;
 
-    if (authenticated && roles) return <Redirect to={`${roles}/`} />;
+    console.log(UtilityMethods.getUserSession());
 
-    if (signupLink) return <Redirect to="patient/signup" />;
+    if (authenticated && userStore.isDoctor)
+      return <Redirect to={`${roles}/`} />;
 
     return (
       <Form onSubmit={this.onSubmitLogin}>

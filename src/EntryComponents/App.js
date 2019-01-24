@@ -15,6 +15,7 @@ import Container, { Login } from "./";
 import DoctorAuth from "../utilityComponents/DoctorAuth";
 import { Modal } from "react-bootstrap";
 import PatientAnalytics from "../utilityComponents/PatientAnalytics";
+import UtilityMethods from "../UtilityMethods";
 
 class App extends Component {
   state = { show: false };
@@ -31,6 +32,9 @@ class App extends Component {
   );
   componentDidMount() {
     const { userStore } = this.props;
+
+    if (UtilityMethods.hasUserSession())
+      userStore.setUser(UtilityMethods.getUserSession().user);
   }
 
   render() {
