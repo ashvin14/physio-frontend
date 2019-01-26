@@ -5,8 +5,8 @@ import { FieldGroup, ButtonComponent } from "./Fields";
 import { Form, FormGroup, FormControl } from "react-bootstrap";
 import { extendObservable, action, toJS } from "mobx";
 import { inject, observer } from "mobx-react";
-import { FailedSignIn } from "./ActionMessages";
 import UtilityMethods from "../UtilityMethods";
+import { FailedSignIn } from "./ActionMessages";
 
 class Login extends Component {
   constructor(props) {
@@ -50,10 +50,7 @@ class Login extends Component {
   };
 
   loginError = error => {
-    this.props.toggleErrorState({
-      title: "Something went wrong :/",
-      message: error.response.data,
-    });
+    let { errorStore } = this.props;
   };
 
   render() {
@@ -81,4 +78,4 @@ class Login extends Component {
   }
 }
 
-export default inject("userStore")(withRouter(observer(Login)));
+export default inject("userStore", "errorStore")(withRouter(observer(Login)));

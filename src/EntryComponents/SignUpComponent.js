@@ -95,7 +95,7 @@ class SignUpComponent extends Component {
           <Picky
             options={options}
             onChange={this.onCheckBoxChange}
-            value={this.state.diagnosed}
+            value={this.state.diagonosed}
             multiple
           />
         </FormGroup>

@@ -37,11 +37,7 @@ export default class FormContainer extends Component {
             <Panel.Heading>
               {role} {type}
             </Panel.Heading>
-            <Panel.Body>
-              {Children}
-
-              <FailedSignIn error={status} title={title} message={message} />
-            </Panel.Body>
+            <Panel.Body>{Children}</Panel.Body>
           </Panel>
         </Col>
       </Row>

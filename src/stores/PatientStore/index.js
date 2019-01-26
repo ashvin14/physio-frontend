@@ -2,6 +2,7 @@ import { extendObservable, action } from "mobx";
 import axios from "axios";
 import APIclient from "../../apiclient";
 import remotedev from "mobx-remotedev/lib";
+import ErrorStore from "../ErrorStore";
 
 class PatientStore {
   constructor() {
@@ -13,7 +14,10 @@ class PatientStore {
           .then(response => {
             this.patients = [...response.data];
           })
-          .catch(err => console.log(err)); //handle this error wisely
+          .catch(err => {
+            ErrorStore.setError(err.response.data);
+            ErrorStore.changeStatus();
+          }); //handle this error wisely
       }),
       get allPatients() {
         return this.patients;

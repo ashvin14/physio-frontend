@@ -3,6 +3,7 @@ import axios from "axios";
 import APIclient from "../../apiclient";
 import remotedev from "mobx-remotedev/lib";
 import UtilityMethods from "../../UtilityMethods";
+import ErrorStore from "../ErrorStore";
 
 class UserStore {
   constructor() {
@@ -46,7 +47,10 @@ class UserStore {
 
             onSuccess(response);
           })
-          .catch(err => onFailure(err));
+          .catch(err => {
+            ErrorStore.setError(err.response.data);
+            ErrorStore.changeStatus(true);
+          });
       }),
 
       signUp: action((data, onSuccess, onFailure) => {
@@ -55,7 +59,10 @@ class UserStore {
           .then(user => {
             onSuccess(user);
           })
-          .catch(err => onFailure(err));
+          .catch(err => {
+            ErrorStore.setError(err.response.data);
+            ErrorStore.changeStatus(true);
+          });
       }),
 
       releaseUser: action(() => {
@@ -72,15 +79,18 @@ class UserStore {
         this.roles = user.roles;
       }),
 
-      logout: action(callback => {
+      logout: action(() => {
         APIclient.userAuthAPI
           .delete()
           .then(() => {
             this.releaseUser();
             UtilityMethods.removeUserSession();
-            callback();
           })
-          .catch(err => console.log(err));
+          .catch(err => {
+            console.log(err);
+            ErrorStore.setError(err.response.data);
+            ErrorStore.changeStatus();
+          });
       }),
     });
   }

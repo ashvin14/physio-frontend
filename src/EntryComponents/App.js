@@ -3,7 +3,6 @@ import logo from "../logo.svg";
 import "./App.css";
 import { withRouter, Switch, Route, Redirect } from "react-router-dom";
 
-// delete this two lines
 //import { extendObservable, action, toJS } from "mobx";
 import { inject, observer } from "mobx-react";
 
@@ -16,6 +15,12 @@ import DoctorAuth from "../utilityComponents/DoctorAuth";
 import { Modal } from "react-bootstrap";
 import PatientAnalytics from "../utilityComponents/PatientAnalytics";
 import UtilityMethods from "../UtilityMethods";
+import ErrorComponent from "./Error";
+import {
+  NotificationManager,
+  NotificationContainer,
+} from "react-notifications";
+import "react-notifications/lib/notifications.css";
 
 class App extends Component {
   state = { show: false };
@@ -30,6 +35,15 @@ class App extends Component {
       </Container>
     </Modal>
   );
+
+  clearError = () => this.props.errorStore.clearError();
+
+  showErrorPopup = () => {
+    let { errorStore } = this.props;
+    if (errorStore.ErrorStatus)
+      return NotificationManager.error(errorStore.ErrorMessage);
+  };
+
   componentDidMount() {
     const { userStore } = this.props;
 
@@ -44,6 +58,8 @@ class App extends Component {
         <section>
           <Header history={history} showSignUp={this.showSignUp} />
           {this.showSignUpComponent()}
+          {this.showErrorPopup()}
+
           <Switch>
             <Route exact path="/" render={() => <Redirect to="/login" />} />
             <Route
@@ -72,11 +88,12 @@ class App extends Component {
             />
             <Route render={() => <h1>404 not found</h1>} />
           </Switch>
+          <NotificationContainer enterTimeOut={5000} leaveTimeOut={5000} />
         </section>
       </div>
     );
   }
 }
 
-const newLocal = inject("patientStore", "userStore");
+const newLocal = inject("patientStore", "userStore", "errorStore");
 export default newLocal(withRouter(observer(App)));
