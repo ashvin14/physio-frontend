@@ -15,7 +15,6 @@ import DoctorAuth from "../utilityComponents/DoctorAuth";
 import { Modal } from "react-bootstrap";
 import PatientAnalytics from "../utilityComponents/PatientAnalytics";
 import UtilityMethods from "../UtilityMethods";
-import ErrorComponent from "./Error";
 import {
   NotificationManager,
   NotificationContainer,
