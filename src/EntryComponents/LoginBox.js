@@ -57,8 +57,6 @@ class Login extends Component {
     let { title, userStore } = this.props;
     let { roles, authenticated } = this.state;
 
-    console.log(UtilityMethods.getUserSession());
-
     if (authenticated && userStore.isDoctor)
       return <Redirect to={`${roles}/`} />;
 

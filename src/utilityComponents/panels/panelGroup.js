@@ -14,7 +14,7 @@ class PanelComponent extends Component {
     patientStore.grabAllPatients();
   }
   render() {
-    let { patientStore, filteredOptions } = this.props;
+    let { patientStore } = this.props;
     let { allPatients } = patientStore;
 
     return (

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import {
   Col,
   FormGroup,
@@ -17,11 +17,11 @@ function FieldGroup({ ...props }) {
     </FormGroup>
   );
 }
-function ButtonComponent({ type, signupPatient, ...props }) {
+function ButtonComponent({ type, signupPatient, bsStyle, ...props }) {
   return (
     <Col>
       <ButtonToolbar>
-        <Button bsStyle="primary" type="submit" {...props}>
+        <Button bsStyle={bsStyle || "primary"} type="submit" {...props}>
           {type}
         </Button>
       </ButtonToolbar>

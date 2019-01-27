@@ -1,17 +1,21 @@
 import React, { Component } from "react";
 import { Panel, Table } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import { inject } from "mobx-react";
+import { ButtonComponent } from "../../EntryComponents";
 
-export default class TableListElement extends Component {
+class TableListElement extends Component {
   render() {
-    let { patient, index } = this.props;
-    console.log(patient);
+    let { patient, index, patientStore } = this.props;
     return (
       <tr>
         <td>{index + 1}</td>
 
         <td>
-          <NavLink to={`./patient/${patient.user_id}`}>
+          <NavLink
+            onClick={() => patientStore.setCurrentPatient(patient)}
+            to={`./patient/${patient.user_id}`}
+          >
             {patient.fullname}
           </NavLink>
         </td>
@@ -24,7 +28,15 @@ export default class TableListElement extends Component {
             ? patient.diagnosed.map((value, index) => value + ", ")
             : patient.diagnosed}
         </td>
+        <td>
+          <ButtonComponent type="Edit" bsStyle="warning" />
+        </td>
+        <td>
+          <ButtonComponent type="Delete" bsStyle="danger" />
+        </td>
       </tr>
     );
   }
 }
+
+export default inject("patientStore")(TableListElement);

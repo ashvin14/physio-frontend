@@ -9,6 +9,7 @@ class PatientStore {
   constructor() {
     extendObservable(this, {
       patients: [],
+      currentPatient: null,
       grabAllPatients: action(() => {
         APIclient.allPatientsAPI
           .get()
@@ -17,11 +18,29 @@ class PatientStore {
           })
           .catch(err => {
             UtilityMethods.handleError(ErrorStore, err);
-          }); //handle this error wisely
+          });
       }),
       get allPatients() {
         return this.patients;
       },
+      get getCurrentPatient() {
+        return this.currentPatient;
+      },
+      currentPatientMaxScoreDayWise: action((patientId, joint, onSuccess) => {
+        APIclient.currentPatientMaxScoreDayWise
+          .get(patientId, joint)
+          .then(response => {
+            let maxScoreData = response.data;
+            this.currentPatient = { ...this.currentPatient, maxScoreData };
+            onSuccess(maxScoreData);
+          })
+          .catch(err => {
+            UtilityMethods.handleError(ErrorStore, err);
+          });
+      }),
+      setCurrentPatient: action(patient => {
+        this.currentPatient = patient;
+      }),
       pushPatient: action(data => this.patients.push(data)),
     });
   }

@@ -9,7 +9,6 @@ export class RoleItem extends Component {
   redirectToLogin = () => this.setState({ redirectPatient: true });
 
   render() {
-    let { history } = this.props;
     if (this.state.redirectPatient) return <Redirect to="/login" />;
     return (
       <NavItem
