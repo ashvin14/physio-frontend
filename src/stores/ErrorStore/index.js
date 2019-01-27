@@ -25,7 +25,7 @@ class ErrorStore {
         this.Error = null;
         this.changeStatus(false);
       }),
-      changeStatus: action(value => {
+      changeStatus: action(() => {
         this.isError = !this.isError;
       }),
     });

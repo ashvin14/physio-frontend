@@ -48,8 +48,7 @@ class UserStore {
             onSuccess(response);
           })
           .catch(err => {
-            ErrorStore.setError(err.response.data);
-            ErrorStore.changeStatus(true);
+            UtilityMethods.handleError(ErrorStore, err);
           });
       }),
 
@@ -60,8 +59,7 @@ class UserStore {
             onSuccess(user);
           })
           .catch(err => {
-            ErrorStore.setError(err.response.data);
-            ErrorStore.changeStatus(true);
+            UtilityMethods.handleError(ErrorStore, err);
           });
       }),
 
@@ -87,9 +85,7 @@ class UserStore {
             UtilityMethods.removeUserSession();
           })
           .catch(err => {
-            console.log(err);
-            ErrorStore.setError(err.response.data);
-            ErrorStore.changeStatus();
+            UtilityMethods.handleError(ErrorStore, err);
           });
       }),
     });

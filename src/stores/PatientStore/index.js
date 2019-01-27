@@ -3,6 +3,7 @@ import axios from "axios";
 import APIclient from "../../apiclient";
 import remotedev from "mobx-remotedev/lib";
 import ErrorStore from "../ErrorStore";
+import UtilityMethods from "../../UtilityMethods";
 
 class PatientStore {
   constructor() {
@@ -15,8 +16,7 @@ class PatientStore {
             this.patients = [...response.data];
           })
           .catch(err => {
-            ErrorStore.setError(err.response.data);
-            ErrorStore.changeStatus();
+            UtilityMethods.handleError(ErrorStore, err);
           }); //handle this error wisely
       }),
       get allPatients() {
