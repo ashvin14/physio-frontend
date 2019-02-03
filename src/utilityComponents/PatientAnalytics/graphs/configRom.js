@@ -1,7 +1,7 @@
-const WIDTH = 600;
+const WIDTH = 800;
 const HEIGHT = 400;
 
-export const chartMaxConfigs = MaxScoreData => {
+export const chartRomConfigs = MaxScoreData => {
   const category = [];
   const joint = [];
   //clear values
@@ -37,13 +37,13 @@ export const chartMaxConfigs = MaxScoreData => {
     dataFormat: "json",
     dataSource: {
       chart: {
-        caption: `Score Analysis of Patient `,
+        caption: `Rom Analysis of Patient `,
         yaxisname: `${yaxisName}`,
         subcaption: "",
         showhovereffect: "1",
         numbersuffix: "",
         drawcrossline: "1",
-        plottooltext: `The Maximum Score of Patient was <b>$dataValue</b> for $seriesName .`,
+        plottooltext: ` $seriesName ,value:<b>$dataValue</b>.`,
         theme: "fusion",
       },
       categories: [
@@ -69,42 +69,63 @@ export const chartMaxConfigs = MaxScoreData => {
       ],
       dataset: [
         {
-          seriesname: "Elbow",
+          seriesname: "Minimum Rom Allowed",
           data: [
             {
-              value: "62",
+              value: "30",
             },
             {
-              value: "64",
+              value: "30",
             },
             {
-              value: "64",
+              value: "30",
             },
             {
-              value: "66",
+              value: "30",
             },
             {
-              value: "78",
+              value: "30",
             },
           ],
         },
         {
-          seriesname: "Wrist",
+          seriesname: "The ROM of patient",
           data: [
             {
-              value: "16",
-            },
-            {
               value: "28",
-            },
-            {
-              value: "34",
             },
             {
               value: "42",
             },
             {
-              value: "54",
+              value: "50",
+            },
+            {
+              value: "55",
+            },
+            {
+              value: "51",
+            },
+          ],
+        },
+
+        {
+          seriesname: "Maximum ROM allowed for patient",
+          data: [
+            {
+              value: "60",
+            },
+            {
+              value: "60",
+            },
+            {
+              value: "60",
+            },
+            {
+              value: "60",
+            },
+            {
+              value: "60",
             },
           ],
         },

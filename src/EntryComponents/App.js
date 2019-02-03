@@ -79,11 +79,13 @@ class App extends Component {
             <Route
               exact
               path="/doctor/patient/:patientId"
-              render={() => (
-                <DoctorAuth>
-                  <PatientAnalytics />
-                </DoctorAuth>
-              )}
+              render={() => {
+                return (
+                  <DoctorAuth>
+                    <PatientAnalytics />
+                  </DoctorAuth>
+                );
+              }}
             />
             <Route render={() => <h1>404 not found</h1>} />
           </Switch>

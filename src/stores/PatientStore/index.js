@@ -26,6 +26,14 @@ class PatientStore {
       get getCurrentPatient() {
         return this.currentPatient;
       },
+      deleteCurrentPatient: action(id => {
+        //api call to delete patient
+        this.patients.map((patient, index) => {
+          if (patient.user_id === id) {
+            this.patients.splice(index, 1);
+          }
+        });
+      }),
       currentPatientMaxScoreDayWise: action((patientId, joint, onSuccess) => {
         APIclient.currentPatientMaxScoreDayWise
           .get(patientId, joint)
@@ -38,8 +46,18 @@ class PatientStore {
             UtilityMethods.handleError(ErrorStore, err);
           });
       }),
-      setCurrentPatient: action(patient => {
-        this.currentPatient = patient;
+      setCurrentPatient: action(patientId => {
+        APIclient.allPatientsAPI
+          .getSinglePatient(patientId)
+          .then(response => {
+            let patient = response.data;
+            this.currentPatient = patient;
+          })
+          .catch(err => {
+            UtilityMethods.handleError(ErrorStore, err);
+          });
+
+        //this.currentPatient=patient
       }),
       pushPatient: action(data => this.patients.push(data)),
     });

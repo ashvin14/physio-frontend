@@ -5,6 +5,7 @@ import { FieldGroup, ButtonComponent } from "./Fields";
 import { Form, FormGroup, Radio, Checkbox, FormControl } from "react-bootstrap";
 import { extendObservable, action, toJS } from "mobx";
 import { inject, observer } from "mobx-react";
+import UtitlityMethods from "../UtilityMethods";
 
 import Picky from "react-picky";
 import "react-picky/dist/picky.css";
@@ -18,18 +19,16 @@ class SignUpComponent extends Component {
     };
   }
 
-  loginSuccess = data => {
-    console.log(data);
+  signupSuccess = data => {
     this.setState({
       authenticated: true,
     });
-    console.log(data);
     this.props.patientStore.pushPatient(data);
     this.props.handleClose();
   };
 
   onSubmitSignup = ev => {
-    let { userStore, roles } = this.props;
+    let { userStore, roles, errorStore } = this.props;
     ev.preventDefault();
 
     if (ev.target.userid.value && ev.target.pass.value) {
@@ -39,19 +38,21 @@ class SignUpComponent extends Component {
         password: ev.target.pass.value,
         age: ev.target.age.value,
         mobile: ev.target.mobile.value,
+        email: ev.target.email.value,
         gender: this.state.gender,
         diagnosed: this.state.diagnosed,
         roles: this.props.roles,
       };
+
       userStore.signUp(
         userAuthData,
-        response => this.loginSuccess(response.data),
-        err => this.loginError(err),
+        response => this.signupSuccess(response.data),
+        err => this.signupError(err),
       );
     }
   };
 
-  loginError = error => {
+  signupError = error => {
     this.props.toggleErrorState({
       title: "data Cannot be saved",
       message: error.response.data,
@@ -77,6 +78,7 @@ class SignUpComponent extends Component {
       <Form onSubmit={this.onSubmitSignup}>
         <FieldGroup type="text" placeholder="Patient's Name" name="fullname" />
         <FieldGroup type="text" placeholder="Username" name="userid" />
+        <FieldGroup type="text" placeholder="Email Id" name="email" />
         <FieldGroup type="password" placeholder="Password" name="pass" />
         <FieldGroup type="number" placeholder="Age" name="age" />
         <FieldGroup type="number" placeholder="Mobile No." name="mobile" />
@@ -107,6 +109,6 @@ class SignUpComponent extends Component {
   }
 }
 
-export default inject("userStore", "patientStore")(
+export default inject("userStore", "patientStore", "errorStore")(
   withRouter(observer(SignUpComponent)),
 );

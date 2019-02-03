@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Table, Row, Col, Grid } from "react-bootstrap";
 import { TableListElement } from "./";
 import { observer, inject } from "mobx-react";
+import { withRouter } from "react-router-dom";
 
 class PanelComponent extends Component {
   state = { activeKey: 0 };
@@ -35,7 +36,11 @@ class PanelComponent extends Component {
               </thead>
               <tbody>
                 {allPatients.map((patient, index) => (
-                  <TableListElement index={index} patient={patient} />
+                  <TableListElement
+                    index={index}
+                    key={index}
+                    patient={patient}
+                  />
                 ))}
               </tbody>
             </Table>

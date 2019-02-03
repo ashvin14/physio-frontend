@@ -15,11 +15,13 @@ import { BrowserRouter as Router } from "react-router-dom";
 import patientStore from "./stores/PatientStore";
 import userStore from "./stores/UserStore";
 import errorStore from "./stores/ErrorStore";
+import notificationStore from "./stores/NotificationStore";
 
 const stores = {
   patientStore,
   userStore,
   errorStore,
+  notificationStore,
 };
 
 window.app_state = stores;

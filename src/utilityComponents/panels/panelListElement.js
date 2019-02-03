@@ -12,10 +12,7 @@ class TableListElement extends Component {
         <td>{index + 1}</td>
 
         <td>
-          <NavLink
-            onClick={() => patientStore.setCurrentPatient(patient)}
-            to={`./patient/${patient.user_id}`}
-          >
+          <NavLink to={`./patient/${patient.user_id}`}>
             {patient.fullname}
           </NavLink>
         </td>
@@ -32,7 +29,11 @@ class TableListElement extends Component {
           <ButtonComponent type="Edit" bsStyle="warning" />
         </td>
         <td>
-          <ButtonComponent type="Delete" bsStyle="danger" />
+          <ButtonComponent
+            type="Delete"
+            bsStyle="danger"
+            onClick={() => patientStore.deleteCurrentPatient(patient.user_id)}
+          />
         </td>
       </tr>
     );
