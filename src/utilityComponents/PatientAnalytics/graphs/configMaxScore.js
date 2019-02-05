@@ -2,6 +2,7 @@ const WIDTH = 600;
 const HEIGHT = 400;
 
 export const chartMaxConfigs = MaxScoreData => {
+  console.log(MaxScoreData);
   const category = [];
   const joint = [];
   //clear values
@@ -11,23 +12,30 @@ export const chartMaxConfigs = MaxScoreData => {
   const yaxisName = "Max Score";
 
   if (MaxScoreData) {
-    console.log(MaxScoreData);
     MaxScoreData.map(dataItem =>
       category.push({
         label: `Day ${dataItem.day}`,
       }),
     );
-
     MaxScoreData.map(dataItem => {
-      if (dataItem.joint === "Elbow")
-        return dataElbow.push({
-          value: dataItem.score,
+      if (dataItem.joint === "Elbow") {
+        dataElbow.push({
+          value: dataItem.maxscore,
         });
-      else
-        return dataWrist.push({
-          value: dataItem.score,
+        dataWrist.push({
+          value: 0,
         });
+      } else {
+        dataElbow.push({
+          value: 0,
+        });
+        dataWrist.push({
+          value: dataItem.maxscore,
+        });
+      }
     });
+
+    console.log(category, dataElbow, dataWrist);
   }
 
   return {
@@ -48,65 +56,17 @@ export const chartMaxConfigs = MaxScoreData => {
       },
       categories: [
         {
-          category: [
-            {
-              label: "Day 1",
-            },
-            {
-              label: "Day 2",
-            },
-            {
-              label: "Day 3",
-            },
-            {
-              label: "Day 4",
-            },
-            {
-              label: "Day 5",
-            },
-          ],
+          category,
         },
       ],
       dataset: [
         {
           seriesname: "Elbow",
-          data: [
-            {
-              value: "62",
-            },
-            {
-              value: "64",
-            },
-            {
-              value: "64",
-            },
-            {
-              value: "66",
-            },
-            {
-              value: "78",
-            },
-          ],
+          data: dataElbow,
         },
         {
           seriesname: "Wrist",
-          data: [
-            {
-              value: "16",
-            },
-            {
-              value: "28",
-            },
-            {
-              value: "34",
-            },
-            {
-              value: "42",
-            },
-            {
-              value: "54",
-            },
-          ],
+          data: dataWrist,
         },
       ],
     },

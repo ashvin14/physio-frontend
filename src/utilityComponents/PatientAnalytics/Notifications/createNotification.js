@@ -16,6 +16,9 @@ class CreateNotification extends Component {
           >
             Send Mail
           </Button>
+          <Button onClick={this.props.generateReport} className="pull-right">
+            generate Report
+          </Button>
         </ButtonToolbar>
       </div>
     );

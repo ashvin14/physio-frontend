@@ -17,11 +17,14 @@ class PanelComponent extends Component {
   render() {
     let { patientStore } = this.props;
     let { allPatients } = patientStore;
-
+    let message = "";
+    if (!allPatients.length)
+      message = "no patients list available. Click add patient In action";
     return (
       <Grid>
         <Row>
           <Col md={9} sm={12}>
+            <h4>{message}</h4>
             <Table responsive hover stripped>
               <thead>
                 <tr>

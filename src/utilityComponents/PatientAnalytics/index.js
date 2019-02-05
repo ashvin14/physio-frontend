@@ -7,29 +7,26 @@ import NotificationsComponent from "./Notifications";
 import RomGraph from "./graphs/RomGraph";
 
 class PatientAnalytics extends Component {
-  state = { key: 1, maxScoreData: null };
+  state = { key: 1, maxScoreData: [] };
 
-  maxScoreData = values => this.setState({ maxScoreData: values });
-
-  componentWillMount() {
-    let { patientStore, match } = this.props;
-    patientStore.setCurrentPatient(match.params.patientId);
-  }
+  maxScoreData = maxScoreData => this.setState({ maxScoreData });
 
   componentDidMount() {
-    let { patientStore } = this.props;
-    if (patientStore.getCurrentPatient) {
+    let { patientStore, match } = this.props;
+    patientStore.setCurrentPatient(match.params.patientId, patient => {
       patientStore.currentPatientMaxScoreDayWise(
         patientStore.getCurrentPatient.user_id,
         patientStore.getCurrentPatient.diagnosed[0],
         values => this.maxScoreData(values),
       );
-    }
+    });
   }
 
   handleSelect = key => this.setState({ key });
 
   render() {
+    let { patientStore, match } = this.props;
+    let { key, maxScoreData } = this.state;
     return (
       <Tabs
         activeKey={this.state.key}
@@ -39,10 +36,13 @@ class PatientAnalytics extends Component {
         <Tab eventKey={1} title="Max Score Analysis">
           <Row>
             <Col md={6} xs={12} sm={5}>
-              <MaxScoreGraph data={this.state.maxScoreData} />
+              <MaxScoreGraph data={maxScoreData} />
             </Col>
             <Col md={6} xs={12}>
-              <NotificationsComponent />
+              <NotificationsComponent
+                eventKey={this.state.key}
+                data={maxScoreData}
+              />
             </Col>
           </Row>
         </Tab>
@@ -54,6 +54,4 @@ class PatientAnalytics extends Component {
   }
 }
 
-export default withRouter(
-  inject("userStore", "patientStore")(observer(PatientAnalytics)),
-);
+export default withRouter(inject("patientStore")(observer(PatientAnalytics)));

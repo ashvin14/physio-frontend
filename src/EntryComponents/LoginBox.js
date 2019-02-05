@@ -9,9 +9,9 @@ import UtilityMethods from "../UtilityMethods";
 import { FailedSignIn } from "./ActionMessages";
 
 class Login extends Component {
+  state = { loading: false };
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       error: false,
       authenticated: false,
@@ -29,12 +29,14 @@ class Login extends Component {
     this.setState({
       authenticated: true,
       roles,
+      loading: false,
     });
   };
 
   onSubmitLogin = ev => {
     let { userStore } = this.props;
     ev.preventDefault();
+    this.setState({ loading: true });
 
     if (ev.target.userid.value && ev.target.pass.value) {
       let userAuthData = {
@@ -66,7 +68,7 @@ class Login extends Component {
         <FieldGroup type="password" placeholder="Password" name="pass" />
         <FormGroup>
           <ButtonComponent
-            type="Log In"
+            type={this.state.loading ? "sending ..." : "Log in"}
             signupPatient={this.signup}
             {...this.props}
           />

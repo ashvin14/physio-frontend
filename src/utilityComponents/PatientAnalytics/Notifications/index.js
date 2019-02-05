@@ -3,6 +3,6 @@ import NotificationPanel from "./NotifPanel";
 
 export default class NotificationsComponent extends Component {
   render() {
-    return <NotificationPanel />;
+    return <NotificationPanel {...this.props} />;
   }
 }

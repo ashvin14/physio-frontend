@@ -16,12 +16,14 @@ class SignUpComponent extends Component {
     this.state = {
       diagnosed: [],
       gender: "Male",
+      loading: false,
     };
   }
 
   signupSuccess = data => {
     this.setState({
       authenticated: true,
+      loading: false,
     });
     this.props.patientStore.pushPatient(data);
     this.props.handleClose();
@@ -30,6 +32,7 @@ class SignUpComponent extends Component {
   onSubmitSignup = ev => {
     let { userStore, roles, errorStore } = this.props;
     ev.preventDefault();
+    this.setState({ loading: true });
 
     if (ev.target.userid.value && ev.target.pass.value) {
       let userAuthData = {
@@ -102,7 +105,11 @@ class SignUpComponent extends Component {
           />
         </FormGroup>
         <FormGroup>
-          <ButtonComponent type="Add Patient" block bsSize="large" />
+          <ButtonComponent
+            type={this.state.loading ? "adding patient..." : "Add Patient"}
+            block
+            bsSize="large"
+          />
         </FormGroup>
       </Form>
     );

@@ -20,15 +20,25 @@ import {
   NotificationContainer,
 } from "react-notifications";
 import "react-notifications/lib/notifications.css";
+import EditComponent from "./EditComponent";
 
 class App extends Component {
-  state = { show: false };
+  state = { showSignup: false, showEdit: false };
 
-  showSignUp = () => this.setState({ show: true });
-  handleClose = () => this.setState({ show: false });
+  showSignUp = () => this.setState({ showSignUp: true });
+  handleClose = () => this.setState({ showSignUp: false });
+  handleCloseEdit = () => this.props.userStore.toggleEdited(false);
+
+  editBoxComponent = () => (
+    <Modal show={this.props.userStore.edited} onHide={this.handleCloseEdit}>
+      <Container type="Edit Patient" md={12} sm={12}>
+        <EditComponent roles="patient" handleClose={this.handleCloseEdit} />
+      </Container>
+    </Modal>
+  );
 
   showSignUpComponent = () => (
-    <Modal show={this.state.show} onHide={this.handleClose}>
+    <Modal show={this.state.showSignup} onHide={this.handleClose}>
       <Container type="Add Patient" md={12} sm={12}>
         <SignUpComponent roles="patient" handleClose={this.handleClose} />
       </Container>
@@ -57,6 +67,7 @@ class App extends Component {
         <section>
           <Header history={history} showSignUp={this.showSignUp} />
           {this.showSignUpComponent()}
+          {this.editBoxComponent()}
           {this.showErrorPopup()}
 
           <Switch>
@@ -96,5 +107,5 @@ class App extends Component {
   }
 }
 
-const newLocal = inject("patientStore", "userStore", "errorStore");
+const newLocal = inject("userStore", "errorStore", "patientStore");
 export default newLocal(withRouter(observer(App)));

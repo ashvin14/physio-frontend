@@ -9,12 +9,14 @@ import {
   singlePatientUrl,
   postNotificationUrl,
   getNotificationsUrl,
+  deletePatientUrl,
+  editPatientUrl,
 } from "./Constant";
 
 axios.defaults.withCredentials = true;
 
 const commonHeaders = {
-  headers: { "Access-Control-Allow-Origin": "http://localhost:8000" },
+  headers: { "Access-Control-Allow-Origin": process.env.REACT_ROOT_APP_URL },
 };
 
 const Notifications = {
@@ -56,6 +58,9 @@ const currentPatientMaxScoreDayWise = {
 
 const patientRegisterAPI = {
   post: data => axios.post(patientRegisterUrl, data, commonHeaders),
+  put: (patientId, data) =>
+    axios.put(editPatientUrl(patientId), data, commonHeaders),
+  delete: patientId => axios.delete(deletePatientUrl(patientId), commonHeaders),
 };
 
 const APIclient = {

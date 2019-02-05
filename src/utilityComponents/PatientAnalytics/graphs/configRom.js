@@ -11,7 +11,6 @@ export const chartRomConfigs = MaxScoreData => {
   const yaxisName = "Max Score";
 
   if (MaxScoreData) {
-    console.log(MaxScoreData);
     MaxScoreData.map(dataItem =>
       category.push({
         label: `Day ${dataItem.day}`,

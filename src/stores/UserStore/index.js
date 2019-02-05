@@ -4,6 +4,7 @@ import APIclient from "../../apiclient";
 import remotedev from "mobx-remotedev/lib";
 import UtilityMethods from "../../UtilityMethods";
 import ErrorStore from "../ErrorStore";
+import PatientStore from "../PatientStore";
 
 class UserStore {
   constructor() {
@@ -12,12 +13,52 @@ class UserStore {
       authenticated: false,
       user: null,
       roles: null,
+      edited: false,
+      editedUserId: null,
       exercises: [],
       problem: [],
-
+      setEditUserId(value) {
+        this.editedUserId = value;
+      },
       get getCurrUser() {
         return this.user;
       },
+      toggleEdited: action(value => {
+        this.edited = value;
+      }),
+      editCurrentPatient: action((id, editedData, callback) => {
+        APIclient.patientRegisterAPI
+          .put(id, editedData)
+          .then(({ data }) => {
+            console.log("data edited ...", id);
+            PatientStore.patients.map((patient, index) => {
+              console.log(patient);
+              if (patient.user_id === id) {
+                PatientStore.patients[index] = data;
+                console.log(PatientStore.patients[index]);
+                this.setEditUserId(null);
+                callback(data);
+              }
+            });
+          })
+          .catch(err => {
+            UtilityMethods.handleError(ErrorStore, err);
+          });
+      }),
+      deleteCurrentPatient: action(id => {
+        APIclient.patientRegisterAPI
+          .delete(id)
+          .then(response => {
+            PatientStore.patients.map((patient, index) => {
+              if (patient.user_id === id) {
+                PatientStore.patients.splice(index, 1);
+              }
+            });
+          })
+          .catch(err => {
+            UtilityMethods.handleError(ErrorStore, err);
+          }); //api call to delete patient
+      }),
 
       get isDoctor() {
         return UtilityMethods.getUserSession().user.roles === "doctor";

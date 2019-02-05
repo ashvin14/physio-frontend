@@ -6,7 +6,7 @@ import { ButtonComponent } from "../../EntryComponents";
 
 class TableListElement extends Component {
   render() {
-    let { patient, index, patientStore } = this.props;
+    let { patient, index, patientStore, userStore } = this.props;
     return (
       <tr>
         <td>{index + 1}</td>
@@ -26,13 +26,20 @@ class TableListElement extends Component {
             : patient.diagnosed}
         </td>
         <td>
-          <ButtonComponent type="Edit" bsStyle="warning" />
+          <ButtonComponent
+            type="Edit"
+            bsStyle="warning"
+            onClick={() => {
+              userStore.toggleEdited(true);
+              userStore.setEditUserId(patient.user_id);
+            }}
+          />
         </td>
         <td>
           <ButtonComponent
             type="Delete"
             bsStyle="danger"
-            onClick={() => patientStore.deleteCurrentPatient(patient.user_id)}
+            onClick={() => userStore.deleteCurrentPatient(patient.user_id)}
           />
         </td>
       </tr>
@@ -40,4 +47,4 @@ class TableListElement extends Component {
   }
 }
 
-export default inject("patientStore")(TableListElement);
+export default inject("patientStore", "userStore")(TableListElement);
