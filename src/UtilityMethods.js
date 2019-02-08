@@ -1,3 +1,5 @@
+import { feedbackUrl } from "./Constant";
+
 const setUserSession = (user, { authenticated, authenticating, roles }) => {
   const data = JSON.stringify({
     user,
@@ -9,7 +11,38 @@ const setUserSession = (user, { authenticated, authenticating, roles }) => {
   localStorage.setItem("userSession", data);
 };
 
+const createFeedbackLink = () => {
+  return `<p> please click on this <a href="${feedbackUrl}">link</a> and provide us with your valuable feedback</p>`;
+};
 const getUserSession = () => JSON.parse(localStorage.getItem("userSession"));
+
+const generateReportTemplateForMaxScore = (data, message) =>
+  `<h3>Report for Maximum Score</h3>
+    <table class="table table-bordered" style="width:100%;">
+      <thead>
+        <tr>
+          <th scope="col">Day</th>
+          <th scope="col">Max Score</th>
+          <th scope="col">Joint</th>
+        </tr>
+      </thead>
+      <tbody>
+      ${data
+        .map(
+          dataItem => `
+        <tr>
+          <td>${dataItem.day}</td>
+          <td>${dataItem.maxscore}</td>
+          <td>${dataItem.joint}</td>
+        </tr>
+        `,
+        )
+        .join("")}
+      </tbody>
+    </table>
+    <hr/>
+    
+    ` + message;
 
 const removeUserSession = () => localStorage.clear();
 
@@ -32,4 +65,6 @@ export default {
   removeUserSession,
   hasUserSession,
   handleError,
+  createFeedbackLink,
+  generateReportTemplateForMaxScore,
 };

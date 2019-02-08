@@ -28,7 +28,18 @@ class PatientStore {
       get getCurrentPatient() {
         return this.currentPatient;
       },
-
+      currentPatientMinMaxRom: action((patientId, joint, onSuccess) => {
+        APIclient.currentPatientMinMaxRom
+          .get(patientId, joint)
+          .then(({ data }) => {
+            let MinMaxRom = data;
+            this.currentPatient = { ...this.currentPatient, MinMaxRom };
+            onSuccess(data);
+          })
+          .catch(err => {
+            UtilityMethods.handleError(ErrorStore, err);
+          });
+      }),
       currentPatientMaxScoreDayWise: action((patientId, joint, onSuccess) => {
         APIclient.currentPatientMaxScoreDayWise
           .get(patientId, joint)

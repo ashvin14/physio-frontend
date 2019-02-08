@@ -30,12 +30,9 @@ class UserStore {
         APIclient.patientRegisterAPI
           .put(id, editedData)
           .then(({ data }) => {
-            console.log("data edited ...", id);
             PatientStore.patients.map((patient, index) => {
-              console.log(patient);
               if (patient.user_id === id) {
                 PatientStore.patients[index] = data;
-                console.log(PatientStore.patients[index]);
                 this.setEditUserId(null);
                 callback(data);
               }

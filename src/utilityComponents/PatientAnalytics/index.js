@@ -7,18 +7,38 @@ import NotificationsComponent from "./Notifications";
 import RomGraph from "./graphs/RomGraph";
 
 class PatientAnalytics extends Component {
-  state = { key: 1, maxScoreData: [] };
-
-  maxScoreData = maxScoreData => this.setState({ maxScoreData });
+  state = {
+    key: 1,
+    MaxWristData: [],
+    MaxElbowData: [],
+    ElbowRomData: [],
+    WristRomData: [],
+  };
 
   componentDidMount() {
     let { patientStore, match } = this.props;
+
     patientStore.setCurrentPatient(match.params.patientId, patient => {
-      patientStore.currentPatientMaxScoreDayWise(
-        patientStore.getCurrentPatient.user_id,
-        patientStore.getCurrentPatient.diagnosed[0],
-        values => this.maxScoreData(values),
-      );
+      patientStore.getCurrentPatient.diagnosed.map(joint => {
+        patientStore.currentPatientMaxScoreDayWise(
+          patientStore.getCurrentPatient.user_id,
+          joint,
+
+          values => {
+            if (joint === "Elbow") this.setState({ MaxElbowData: values });
+            else this.setState({ MaxWristData: values });
+          },
+
+          patientStore.currentPatientMinMaxRom(
+            patientStore.getCurrentPatient.user_id,
+            joint,
+            values => {
+              if (joint === "Elbow") this.setState({ ElbowRomData: values });
+              else this.setState({ WristRomData: values });
+            },
+          ),
+        );
+      });
     });
   }
 
@@ -26,7 +46,13 @@ class PatientAnalytics extends Component {
 
   render() {
     let { patientStore, match } = this.props;
-    let { key, maxScoreData } = this.state;
+    let {
+      key,
+      MaxElbowData,
+      MaxWristData,
+      ElbowRomData,
+      WristRomData,
+    } = this.state;
     return (
       <Tabs
         activeKey={this.state.key}
@@ -36,18 +62,42 @@ class PatientAnalytics extends Component {
         <Tab eventKey={1} title="Max Score Analysis">
           <Row>
             <Col md={6} xs={12} sm={5}>
-              <MaxScoreGraph data={maxScoreData} />
+              <MaxScoreGraph
+                data={[...MaxElbowData, ...MaxWristData]}
+                joint={
+                  patientStore.getCurrentPatient
+                    ? patientStore.currentPatient.diagnosed
+                    : []
+                }
+              />
             </Col>
             <Col md={6} xs={12}>
               <NotificationsComponent
                 eventKey={this.state.key}
-                data={maxScoreData}
+                data={[...MaxElbowData, ...MaxWristData]}
               />
             </Col>
           </Row>
         </Tab>
         <Tab eventKey={2} title="ROM analysis">
-          <RomGraph />
+          <Row>
+            <Col md={6} xs={12} sm={5}>
+              <RomGraph
+                data={[...ElbowRomData, ...WristRomData]}
+                joint={
+                  patientStore.getCurrentPatient
+                    ? patientStore.getCurrentPatient.diagnosed
+                    : []
+                }
+              />
+            </Col>
+            <Col md={6} xs={12}>
+              <NotificationsComponent
+                eventKey={this.state.key}
+                data={[...ElbowRomData, ...WristRomData]}
+              />
+            </Col>
+          </Row>
         </Tab>
       </Tabs>
     );

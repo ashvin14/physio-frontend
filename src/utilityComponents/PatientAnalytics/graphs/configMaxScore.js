@@ -1,13 +1,11 @@
 const WIDTH = 600;
 const HEIGHT = 400;
 
-export const chartMaxConfigs = MaxScoreData => {
-  console.log(MaxScoreData);
-  const category = [];
-  const joint = [];
-  //clear values
+export const chartMaxConfigs = (MaxScoreData, joints) => {
   const dataElbow = [],
+    dataset = [],
     dataWrist = [];
+  let category = [];
 
   const yaxisName = "Max Score";
 
@@ -15,28 +13,48 @@ export const chartMaxConfigs = MaxScoreData => {
     MaxScoreData.map(dataItem =>
       category.push({
         label: `Day ${dataItem.day}`,
+        index: dataItem.day,
       }),
     );
-    MaxScoreData.map(dataItem => {
-      if (dataItem.joint === "Elbow") {
-        dataElbow.push({
-          value: dataItem.maxscore,
-        });
-        dataWrist.push({
-          value: 0,
-        });
+  }
+
+  category = Array.from(new Set(category.map(JSON.stringify))).map(JSON.parse);
+  category.map(({ index }) => {
+    joints.map(joint => {
+      if (joint === "Elbow") {
+        dataElbow.push({ value: 0 });
       } else {
-        dataElbow.push({
-          value: 0,
-        });
-        dataWrist.push({
-          value: dataItem.maxscore,
-        });
+        dataWrist.push({ value: 0 });
+      }
+    });
+  });
+
+  category.map(({ index }) => {
+    //check index with maxScoreData day
+    MaxScoreData.map(dataItem => {
+      if (index === dataItem.day) {
+        if (dataItem.joint === "Elbow") {
+          dataElbow[index - 1].value = dataItem.maxscore;
+        } else dataWrist[index - 1].value = dataItem.maxscore;
       }
     });
 
-    console.log(category, dataElbow, dataWrist);
-  }
+    //if matches check joint and append data to that data array
+  });
+
+  //generating dataset
+  joints.map(seriesname => {
+    if (seriesname === "Elbow")
+      dataset.push({
+        seriesname,
+        data: dataElbow,
+      });
+    else
+      dataset.push({
+        seriesname,
+        data: dataWrist,
+      });
+  });
 
   return {
     type: "msline",
@@ -59,16 +77,7 @@ export const chartMaxConfigs = MaxScoreData => {
           category,
         },
       ],
-      dataset: [
-        {
-          seriesname: "Elbow",
-          data: dataElbow,
-        },
-        {
-          seriesname: "Wrist",
-          data: dataWrist,
-        },
-      ],
+      dataset,
     },
   };
 };

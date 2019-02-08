@@ -23,10 +23,10 @@ import "react-notifications/lib/notifications.css";
 import EditComponent from "./EditComponent";
 
 class App extends Component {
-  state = { showSignup: false, showEdit: false };
+  state = { signUp: false };
 
-  showSignUp = () => this.setState({ showSignUp: true });
-  handleClose = () => this.setState({ showSignUp: false });
+  showSignUp = () => this.setState({ signUp: true });
+  handleClose = () => this.setState({ signUp: false });
   handleCloseEdit = () => this.props.userStore.toggleEdited(false);
 
   editBoxComponent = () => (
@@ -38,7 +38,7 @@ class App extends Component {
   );
 
   showSignUpComponent = () => (
-    <Modal show={this.state.showSignup} onHide={this.handleClose}>
+    <Modal show={this.state.signUp} onHide={this.handleClose}>
       <Container type="Add Patient" md={12} sm={12}>
         <SignUpComponent roles="patient" handleClose={this.handleClose} />
       </Container>

@@ -10,10 +10,9 @@ ReactFC.fcRoot(FusionCharts, Charts, FusionTheme);
 
 class RomGraph extends Component {
   state = { data: null };
-  maxScoreData = data => this.setState({ data });
 
   render() {
-    return <ReactFC {...chartRomConfigs(this.state.data)} />;
+    return <ReactFC {...chartRomConfigs(this.props.data, this.props.joint)} />;
   }
 }
 

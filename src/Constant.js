@@ -1,15 +1,16 @@
-const ROOT_URL = process.env.REACT_APP_ROOT_URL;
-const allPatientsUrl = `${ROOT_URL}/doctor/all/patients`;
-const userAuthUrl = `${ROOT_URL}/login`;
-const patientRegisterUrl = `${ROOT_URL}/signup`;
-const logoutUserUrl = `${ROOT_URL}/signOut`;
-const getMaxScoreUrl = `${ROOT_URL}/doctor/patient/maxscore`;
-const singlePatientUrl = patientID => `${ROOT_URL}/doctor/${patientID}`;
-const postNotificationUrl = `${ROOT_URL}/doctor/sendmail`;
-const getNotificationsUrl = patientID =>
-  `${ROOT_URL}/doctor/getmail/${patientID}`;
-const deletePatientUrl = patientID => `${ROOT_URL}/doctor/delete/${patientID}`;
-const editPatientUrl = patientID => `${ROOT_URL}/doctor/update/${patientID}`;
+const ROOT_URL = process.env.REACT_APP_ROOT_URL,
+  allPatientsUrl = `${ROOT_URL}/doctor/all/patients`,
+  userAuthUrl = `${ROOT_URL}/login`,
+  patientRegisterUrl = `${ROOT_URL}/signup`,
+  logoutUserUrl = `${ROOT_URL}/signOut`,
+  getMaxScoreUrl = `${ROOT_URL}/doctor/patient/maxscore`,
+  singlePatientUrl = patientID => `${ROOT_URL}/doctor/${patientID}`,
+  postNotificationUrl = `${ROOT_URL}/doctor/sendmail`,
+  getNotificationsUrl = patientID => `${ROOT_URL}/doctor/getmail/${patientID}`,
+  deletePatientUrl = patientID => `${ROOT_URL}/doctor/delete/${patientID}`,
+  editPatientUrl = patientID => `${ROOT_URL}/doctor/update/${patientID}`,
+  getMinMaxRomUrl = patientID => `${ROOT_URL}/doctor/patient/rom/${patientID}`,
+  feedbackUrl = `https://goo.gl/forms/3r1X41CBf2I7wrpv1`;
 
 export {
   allPatientsUrl,
@@ -22,4 +23,6 @@ export {
   getNotificationsUrl,
   deletePatientUrl,
   editPatientUrl,
+  getMinMaxRomUrl,
+  feedbackUrl,
 };

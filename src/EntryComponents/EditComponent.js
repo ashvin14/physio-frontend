@@ -134,7 +134,7 @@ class EditComponent extends Component {
         <FieldGroup
           type="text"
           placeholder="Username"
-          name="userid"
+          name="username"
           onChange={this.handleEditedChanges}
           value={this.state.username}
         />

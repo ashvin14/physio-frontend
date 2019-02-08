@@ -9,6 +9,9 @@ class CreateNotification extends Component {
       <div>
         <ReactQuill value={this.props.text} onChange={this.props.onChange} />
         <ButtonToolbar>
+          <Button onClick={this.props.generateHTMLlink}>
+            Generate Feedback Link
+          </Button>
           <Button
             bsStyle={"success"}
             onClick={this.props.onSubmit}
@@ -17,7 +20,7 @@ class CreateNotification extends Component {
             Send Mail
           </Button>
           <Button onClick={this.props.generateReport} className="pull-right">
-            generate Report
+            Generate Report and send mail
           </Button>
         </ButtonToolbar>
       </div>
