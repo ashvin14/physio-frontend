@@ -16,7 +16,37 @@ const createFeedbackLink = () => {
 };
 const getUserSession = () => JSON.parse(localStorage.getItem("userSession"));
 
-const generateTemplateForExtensionFlexion;
+const generateTemplateForExtensionFlexion = (data, message) =>
+  ` <h3>Report for ROM analysis</h3>
+<table class="table table-bordered" style="width:100%;">
+  <thead>
+    <tr>
+      <th scope="col">Date</th>
+      <th scope="col">Extension (Range in degrees)</th>
+      <th scope="col">Flexion (Range in degrees)</th>
+      <th scope="col">Joint</th>
+    </tr>
+  </thead>
+  <tbody>
+  ${data
+    .map(
+      dataItem => `
+    <tr>
+      <td>${new Date(dataItem.created_at).getDate()}/${new Date(
+        dataItem.created_at,
+      ).getMonth() + 1}/${new Date(dataItem.created_at).getFullYear()}</td>
+      <td>${dataItem.min_rom}-${dataItem.max_rom} </td>
+      <td>${dataItem.max_rom}-${dataItem.min_rom} </td>
+      <td>${dataItem.joint}</td>
+    </tr>
+    `,
+    )
+    .join("")}
+  </tbody>
+</table>
+<hr/>
+
+` + message;
 
 const generateReportTemplateForMaxScore = (data, message) =>
   `<h3>Report for Maximum Score</h3>
@@ -69,4 +99,5 @@ export default {
   handleError,
   createFeedbackLink,
   generateReportTemplateForMaxScore,
+  generateTemplateForExtensionFlexion,
 };
