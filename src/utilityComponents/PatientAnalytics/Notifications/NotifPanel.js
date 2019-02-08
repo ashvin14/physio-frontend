@@ -21,6 +21,19 @@ class NotificationPanel extends Component {
     this.props.notificationStore.pushNotification(text);
   };
 
+  generateReportForExtensionFlexion = ev => {
+    let { notificationStore, patientStore, data } = this.props;
+
+    let { getCurrentPatient } = patientStore;
+    notificationStore.sendNotification(
+      UtilityMethods.generateTemplateForExtensionFlexion(data, this.state.text),
+      getCurrentPatient.user_id,
+      notification => this.onSuccessNotification(notification),
+    );
+
+    this.setState({ text: "", loading: true });
+  };
+
   generateReportForMaxScore = ev => {
     let { notificationStore, patientStore, data } = this.props;
 
@@ -49,7 +62,10 @@ class NotificationPanel extends Component {
   };
   render() {
     let { notifications } = this.props.notificationStore;
-    let reports = [this.generateReportForMaxScore];
+    let reports = [
+      this.generateReportForMaxScore,
+      this.generateReportForExtensionFlexion,
+    ];
 
     return (
       <div>

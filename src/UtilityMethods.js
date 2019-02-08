@@ -16,6 +16,8 @@ const createFeedbackLink = () => {
 };
 const getUserSession = () => JSON.parse(localStorage.getItem("userSession"));
 
+const generateTemplateForExtensionFlexion;
+
 const generateReportTemplateForMaxScore = (data, message) =>
   `<h3>Report for Maximum Score</h3>
     <table class="table table-bordered" style="width:100%;">
