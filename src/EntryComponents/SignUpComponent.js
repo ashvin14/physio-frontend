@@ -40,7 +40,7 @@ class SignUpComponent extends Component {
         username: ev.target.userid.value,
         password: ev.target.pass.value,
         age: ev.target.age.value,
-        mobile: ev.target.mobile.value,
+        mobile: ev.target.mobile.value || null,
         email: ev.target.email.value,
         gender: this.state.gender,
         diagnosed: this.state.diagnosed,

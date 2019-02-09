@@ -1,7 +1,7 @@
-const WIDTH = 600;
-const HEIGHT = 400;
+const WIDTH = 100;
+const HEIGHT = 80;
 
-export const chartRomConfigs = (RomData, joints) => {
+export const chartRomConfigs = (RomData, joints, chartType) => {
   let category = [];
   const dataMinElbow = [],
     dataMinWrist = [],
@@ -9,13 +9,11 @@ export const chartRomConfigs = (RomData, joints) => {
     dataset = [],
     dataMaxWrist = [];
 
+  console.log(chartType);
+
   RomData.map((dataItem, index) =>
     category.push({
-      label: `${new Date(dataItem.created_at).getDate()}/${new Date(
-        dataItem.created_at,
-      ).getMonth() + 1}/${new Date(
-        dataItem.created_at,
-      ).getFullYear()} (Day ${index + 1})`,
+      label: `Day ${index + 1}`,
       index,
     }),
   );
@@ -74,9 +72,9 @@ export const chartRomConfigs = (RomData, joints) => {
   const yaxisName = "Rom (Range of Motion)";
 
   return {
-    type: "msline",
-    width: `${WIDTH}`,
-    height: `${HEIGHT}`,
+    type: chartType,
+    width: `${WIDTH}%`,
+    height: `${HEIGHT}%`,
     dataFormat: "json",
     dataSource: {
       chart: {

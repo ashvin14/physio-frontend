@@ -5,6 +5,7 @@ import MaxScoreGraph from "./graphs";
 import { withRouter } from "react-router-dom";
 import NotificationsComponent from "./Notifications";
 import RomGraph from "./graphs/RomGraph";
+import Picky from "react-picky";
 
 class PatientAnalytics extends Component {
   state = {
@@ -13,6 +14,7 @@ class PatientAnalytics extends Component {
     MaxElbowData: [],
     ElbowRomData: [],
     WristRomData: [],
+    chartType: "msline",
   };
 
   componentDidMount() {
@@ -42,6 +44,8 @@ class PatientAnalytics extends Component {
     });
   }
 
+  onChangeChart = chartType => this.setState({ chartType });
+
   handleSelect = key => this.setState({ key });
 
   render() {
@@ -61,7 +65,7 @@ class PatientAnalytics extends Component {
       >
         <Tab eventKey={1} title="Max Score Analysis">
           <Row>
-            <Col md={6} xs={12} sm={5}>
+            <Col md={7} xs={12} sm={5} style={{ height: "600px" }}>
               <MaxScoreGraph
                 data={[...MaxElbowData, ...MaxWristData]}
                 joint={
@@ -69,9 +73,15 @@ class PatientAnalytics extends Component {
                     ? patientStore.currentPatient.diagnosed
                     : []
                 }
+                chartType={this.state.chartType}
               />
+              {/* <Picky
+                options={["mssplinearea", "msline", "msarea", "msspline"]}
+                value={this.state.chartType}
+                onChange={this.onChangeChart}
+              /> */}
             </Col>
-            <Col md={6} xs={12}>
+            <Col md={5} xs={12}>
               <NotificationsComponent
                 eventKey={this.state.key}
                 data={[...MaxElbowData, ...MaxWristData]}
@@ -81,7 +91,7 @@ class PatientAnalytics extends Component {
         </Tab>
         <Tab eventKey={2} title="ROM analysis">
           <Row>
-            <Col md={6} xs={12} sm={5}>
+            <Col md={7} xs={12} sm={5} style={{ height: "600px" }}>
               <RomGraph
                 data={[...ElbowRomData, ...WristRomData]}
                 joint={
@@ -89,9 +99,16 @@ class PatientAnalytics extends Component {
                     ? patientStore.getCurrentPatient.diagnosed
                     : []
                 }
+                chartType={this.state.chartType}
               />
+              {/* <Picky
+                options={["mssplinearea", "msline", "msarea", "msspline"]}
+                value={this.state.chartType}
+                onChange={this.onChangeChart}
+              /> */}
             </Col>
-            <Col md={6} xs={12}>
+
+            <Col md={5} xs={12}>
               <NotificationsComponent
                 eventKey={this.state.key}
                 data={[...ElbowRomData, ...WristRomData]}

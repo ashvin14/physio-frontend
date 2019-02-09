@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import ReactQuill from "react-quill";
-import { Button, ButtonToolbar } from "react-bootstrap";
+import { Button, ButtonToolbar, ButtonGroup } from "react-bootstrap";
 import "react-quill/dist/quill.snow.css";
 
 class CreateNotification extends Component {
@@ -9,19 +9,28 @@ class CreateNotification extends Component {
       <div>
         <ReactQuill value={this.props.text} onChange={this.props.onChange} />
         <ButtonToolbar>
-          <Button onClick={this.props.generateHTMLlink}>
-            Generate Feedback Link
-          </Button>
-          <Button
-            bsStyle={"success"}
-            onClick={this.props.onSubmit}
-            className="pull-right"
-          >
-            Send Mail
-          </Button>
-          <Button onClick={this.props.generateReport} className="pull-right">
-            Generate Report and send mail
-          </Button>
+          <ButtonGroup className="mr-2">
+            <Button
+              onClick={this.props.generateHTMLlink}
+              size="sm"
+              className="pull-right"
+            >
+              Generate Feedback Link
+            </Button>
+
+            <Button
+              onClick={this.props.generateReport}
+              className="pull-right"
+              size="sm"
+            >
+              Generate Report and send mail
+            </Button>
+          </ButtonGroup>
+          <ButtonGroup className="pull-right ">
+            <Button bsStyle={"success"} onClick={this.props.onSubmit} size="sm">
+              Send Mail
+            </Button>
+          </ButtonGroup>
         </ButtonToolbar>
       </div>
     );

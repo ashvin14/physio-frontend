@@ -10,7 +10,15 @@ ReactFC.fcRoot(FusionCharts, Charts, FusionTheme);
 
 class MaxScoreGraph extends Component {
   render() {
-    return <ReactFC {...chartMaxConfigs(this.props.data, this.props.joint)} />;
+    return (
+      <ReactFC
+        {...chartMaxConfigs(
+          this.props.data,
+          this.props.joint,
+          this.props.chartType,
+        )}
+      />
+    );
   }
 }
 

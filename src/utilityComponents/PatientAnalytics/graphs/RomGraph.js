@@ -12,7 +12,15 @@ class RomGraph extends Component {
   state = { data: null };
 
   render() {
-    return <ReactFC {...chartRomConfigs(this.props.data, this.props.joint)} />;
+    return (
+      <ReactFC
+        {...chartRomConfigs(
+          this.props.data,
+          this.props.joint,
+          this.props.chartType,
+        )}
+      />
+    );
   }
 }
 

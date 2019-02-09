@@ -1,7 +1,7 @@
-const WIDTH = 600;
-const HEIGHT = 400;
+const WIDTH = 100;
+const HEIGHT = 80;
 
-export const chartMaxConfigs = (MaxScoreData, joints) => {
+export const chartMaxConfigs = (MaxScoreData, joints, type) => {
   const dataElbow = [],
     dataset = [],
     dataWrist = [];
@@ -57,9 +57,9 @@ export const chartMaxConfigs = (MaxScoreData, joints) => {
   });
 
   return {
-    type: "msline",
-    width: `${WIDTH}`,
-    height: `${HEIGHT}`,
+    type,
+    width: `${WIDTH}%`,
+    height: `${HEIGHT}%`,
     dataFormat: "json",
     dataSource: {
       chart: {
