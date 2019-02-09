@@ -92,10 +92,12 @@ class EditComponent extends Component {
       patientStore.getCurrentPatient.user_id,
       userEditedData,
       response => this.editSuccess(response.data),
+      err => this.editError(err),
     );
   };
 
   editError = error => {
+    this.setState({ loading: false });
     this.props.toggleErrorState({
       title: "data Cannot be saved",
       message: error.response.data,
