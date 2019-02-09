@@ -26,7 +26,7 @@ class UserStore {
       toggleEdited: action(value => {
         this.edited = value;
       }),
-      editCurrentPatient: action((id, editedData, callback) => {
+      editCurrentPatient: action((id, editedData, callback, onFailure) => {
         APIclient.patientRegisterAPI
           .put(id, editedData)
           .then(({ data }) => {
@@ -39,6 +39,7 @@ class UserStore {
             });
           })
           .catch(err => {
+            onFailure(err);
             UtilityMethods.handleError(ErrorStore, err);
           });
       }),
@@ -86,6 +87,7 @@ class UserStore {
             onSuccess(response);
           })
           .catch(err => {
+            onFailure(err);
             UtilityMethods.handleError(ErrorStore, err);
           });
       }),
@@ -97,6 +99,7 @@ class UserStore {
             onSuccess(user);
           })
           .catch(err => {
+            onFailure(err);
             UtilityMethods.handleError(ErrorStore, err);
           });
       }),

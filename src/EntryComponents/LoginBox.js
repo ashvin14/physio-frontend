@@ -52,6 +52,7 @@ class Login extends Component {
   };
 
   loginError = error => {
+    this.setState({ loading: false });
     let { errorStore } = this.props;
   };
 

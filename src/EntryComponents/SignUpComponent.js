@@ -56,6 +56,7 @@ class SignUpComponent extends Component {
   };
 
   signupError = error => {
+    this.setState({ loading: false });
     this.props.toggleErrorState({
       title: "data Cannot be saved",
       message: error.response.data,
