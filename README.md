@@ -1,4 +1,5 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is an application to help doctors monitor patients progress. The data is coming from kinect sensor to the Node server. The node server is responsible for processing the data and Store it in database. 
 
 ## Available Scripts
 
