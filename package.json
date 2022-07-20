@@ -37,7 +37,7 @@
     "extends": "react-app"
   },
   "resolutions": {
-    "terser": "3.14.1"
+    "terser": "4.8.1"
   },
   "browserslist": [
     ">0.2%",
@@ -48,6 +48,6 @@
   "devDependencies": {
     "react-app-rewire-eslint": "^0.2.3",
     "react-app-rewired": "^1.6.2",
-    "terser": "3.14.1"
+    "terser": "4.8.1"
   }
 }
